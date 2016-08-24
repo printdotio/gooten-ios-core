@@ -27,5 +27,8 @@ $ pod install
 
 You should open the `{Project}.xcworkspace` instead of the `{Project}.xcodeproj` after you installed anything from CocoaPods.
 
+## Import
+In Objective C project use ```@import GootenCore;```. In Swift project use ```import GootenCore```.
+
 ## Documentation
 Gooten Core [documentation and user guide](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md).
