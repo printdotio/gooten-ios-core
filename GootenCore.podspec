@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name                  = "GootenCore"
-  s.version               = "0.0.22"
+  s.version               = "0.0.23"
   s.summary               = "SDK that enables the printing of any photo, from any source, onto any product!"
   s.homepage              = "http://www.gooten.com"
   s.license          	  = { :type => 'Commercial', :file => 'LICENSE.md' }
