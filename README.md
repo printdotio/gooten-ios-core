@@ -27,7 +27,5 @@ $ pod install
 
 You should open the `{Project}.xcworkspace` instead of the `{Project}.xcodeproj` after you installed anything from CocoaPods.
 
-For more information about how to use CocoaPods, look here [this tutorial](http://www.raywenderlich.com/64546/introduction-to-cocoapods-2).
-
 ## Documentation
 Gooten Core [documentation and user guide](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md).
