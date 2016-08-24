@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.license          	  = { :type => 'Commercial', :file => 'LICENSE.md' }
   s.author                = { "GootenCore" => "boro@gooten.com" }
   s.ios.deployment_target = "8.0"
-  s.source                = { :git => "https://github.com/printdotio/gooten-ios-core.git", :branch => "cocoapods", :tag => s.version }
+  s.source                = { :git => "https://github.com/printdotio/gooten-ios-core.git", :branch => "master", :tag => s.version }
   s.source_files          = 'GootenCore/GootenCore/*.{h,swift}', 'GootenCore/GootenCore/Braintree/*.{h,m}'
 
 end
