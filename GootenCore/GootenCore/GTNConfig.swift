@@ -29,8 +29,8 @@ public class GTNConfig: NSObject {
     public var currencyCode: String = GTNDefaults.kCurrencyCode;
     public var showAllProducts: Bool = true;
     
-    override init(){
-        
+    public override init(){
+        super.init();
     }
     
     func isValid() -> Bool {

@@ -477,7 +477,7 @@ class GTNAPIClient {
         
         let endpoint = useRecipeId ? "\(path)recipeid=\(GTNConfig.sharedInstance.recipeId)&" : "\(path)";
         
-        printgt("GTNAPIClient url: \(baseURL.absoluteString)\(path)");
+        printgt("GTNAPIClient url: \(baseURL.absoluteString)\(endpoint)");
         printgt("GTNAPIClient params: \(params)");
         printgt("GTNAPIClient rawData: \(rawData)");
         
