@@ -14,8 +14,8 @@ public class GTNCurrency: NSObject {
     public var code: String = "";
     public var format: String = "";
     
-    override init() {
-        
+    public override init() {
+        super.init();
     }
     
     init(_ jsonObj: AnyObject) {

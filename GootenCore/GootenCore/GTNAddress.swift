@@ -21,8 +21,8 @@ public class GTNAddress: NSObject{
     public var phone: String = "";
     public var email: String = "";
     
-    override init() {
-        
+    public override init() {
+        super.init();
     }
     
     init (_ jsonObj: AnyObject){
@@ -30,7 +30,7 @@ public class GTNAddress: NSObject{
         self.parseJson(jsonObj);
     }
     
-    init(firstName: String, lastName: String, line1: String, line2: String, city: String, state: String, countryCode: String, postalCode: String, phone: String, email: String) {
+    public init(firstName: String, lastName: String, line1: String, line2: String, city: String, state: String, countryCode: String, postalCode: String, phone: String, email: String) {
         super.init();
         self.firstName = firstName;
         self.lastName = lastName;

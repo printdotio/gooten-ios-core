@@ -15,8 +15,8 @@ public class GTNProductTemplate: NSObject{
     public var isDefault: Bool = false;
     public var spaces: Array<GTNSpace> = [];
     
-    override init() {
-        
+    public override init() {
+        super.init();
     }
     
     init(_ jsonObj: AnyObject) {

@@ -16,8 +16,8 @@ public class GTNProposedAddress: NSObject {
     public var stateOrProvinceCode: String = "";
     public var streetLines: [String] = [];
     
-    override init() {
-        
+    public override init() {
+        super.init();
     }
     
     init(_ jsonObj: AnyObject) {

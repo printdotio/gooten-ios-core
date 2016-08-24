@@ -13,7 +13,7 @@ public class GTNPayment: NSObject {
     public var currencyCode: String = "";
     public var total: Double = 0.0;
     
-    init(currencyCode: String, total: Double) {
+    public init(currencyCode: String, total: Double) {
         super.init();
         self.currencyCode = currencyCode;
         self.total = total;

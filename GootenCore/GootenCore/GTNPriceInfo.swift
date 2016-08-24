@@ -16,8 +16,8 @@ public class GTNPriceInfo: NSObject{
     public var currencyFormat: String = "";
     public var currencyDigits: Int = 0;
     
-    override init() {
-        
+    public override init() {
+        super.init();
     }
     
     init(_ jsonObj: AnyObject) {

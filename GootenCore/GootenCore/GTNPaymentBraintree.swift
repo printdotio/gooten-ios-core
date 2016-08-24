@@ -14,7 +14,7 @@ public class GTNPaymentBraintree: GTNPayment {
     public var braintreeEncryptedCCExpDate: String = "";
     public var braintreeEncryptedCCV: String = "";
     
-    init(braintreeEncryptedCCNumber: String, braintreeEncryptedCCExpDate: String, braintreeEncryptedCCV: String, currencyCode: String, total: Double) {
+    public init(braintreeEncryptedCCNumber: String, braintreeEncryptedCCExpDate: String, braintreeEncryptedCCV: String, currencyCode: String, total: Double) {
         super.init(currencyCode: currencyCode, total: total);
         self.braintreeEncryptedCCNumber = braintreeEncryptedCCNumber;
         self.braintreeEncryptedCCExpDate = braintreeEncryptedCCExpDate;

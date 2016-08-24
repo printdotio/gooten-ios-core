@@ -16,7 +16,7 @@ public class GTNOrderItem: NSObject {
     public var meta: Dictionary<String, String> = [:]
     public var images: Array<GTNOrderItemImage> = []
     
-    init(sku: String, quantity: Int, shipCarrierMethod: Int, images: [GTNOrderItemImage], meta: [String:String]) {
+    public init(sku: String, quantity: Int, shipCarrierMethod: Int, images: [GTNOrderItemImage], meta: [String:String]) {
         super.init()
         self.sku = sku
         self.quantity = quantity

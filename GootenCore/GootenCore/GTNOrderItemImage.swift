@@ -15,7 +15,7 @@ public class GTNOrderItemImage: NSObject {
     public var thumbnailUrl: String = "";
     public var manipCommand: String = "";
     
-    init(url: String, index: Int, thumbnailUrl: String, manipCommand: String) {
+    public init(url: String, index: Int, thumbnailUrl: String, manipCommand: String) {
         super.init();
         self.url = url;
         self.index = index;
