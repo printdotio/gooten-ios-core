@@ -24,25 +24,25 @@ After configuration has been set all API requests will use specified Recipe ID.
 ## Gooten API
 
 - [Getting a User's Location](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-a-users-location)
-- [Getting a List of Products](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-a-list-of-products)
-- [Getting a List of SKUs (Product Variants) for a Product](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-a-list-of-skus-product-variants-for-a-product)
-- [Getting a SKU's Required Images](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-a-skus-required-images)
-- [Getting a List of Templates For a SKU](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-a-list-of-templates-for-a-sku)
-- [Getting Shipping Options For a Cart](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-shipping-options-for-a-cart)
-- [Getting a Ship Price Estimate](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-a-ship-price-estimate)
-- [Submitting an Order via Braintree](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#submitting-an-order-via-braintree-credit-card)
-- [Submitting an Order via ApplePay](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#submitting-order-via-applepay)
-- [Submitting an Order via PayPal](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#submitting-order-via-paypal)
-- [Getting an Order price estimate]()
-- [Getting Payment Validation](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-payment-validation)
-- [Getting an Order's Info](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-an-orders-info)
+- [Getting a List of Products](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-a-list-of-products)
+- [Getting a List of SKUs (Product Variants) for a Product](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-a-list-of-skus-product-variants-for-a-product)
+- [Getting a SKU's Required Images](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-a-skus-required-images)
+- [Getting a List of Templates For a SKU](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-a-list-of-templates-for-a-sku)
+- [Getting Shipping Options For a Cart](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-shipping-options-for-a-cart)
+- [Getting a Ship Price Estimate](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-a-ship-price-estimate)
+- [Submitting an Order via Braintree](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#submitting-an-order-via-braintree-credit-card)
+- [Submitting an Order via ApplePay](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#submitting-order-via-applepay)
+- [Submitting an Order via PayPal](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#submitting-order-via-paypal)
+- [Getting an Order price estimate](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-order-price-estimate)
+- [Getting Payment Validation](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-payment-validation)
+- [Getting an Order's Info](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-an-orders-info)
 
 #### Other API
-- [Getting Countries](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-countries)
-- [Getting Currencies](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-currencies)
-- [Currency Conversion](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#currency-conversion)
-- [Getting User Info](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-user-info)
-- [Address validation](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#address-validation)
+- [Getting Countries](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-countries)
+- [Getting Currencies](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-currencies)
+- [Currency Conversion](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#currency-conversion)
+- [Getting User Info](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-user-info)
+- [Address validation](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#address-validation)
 
 ### Getting a User's Location
 
