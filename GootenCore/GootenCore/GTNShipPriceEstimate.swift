@@ -22,12 +22,12 @@ open class GTNShipPriceEstimate: NSObject {
     }
     
     func parseJson(_ jsonObj: AnyObject) {
-        if let minPriceObj = jsonObj["MinPrice"], let minPriceJson = minPriceObj{
-            self.minPrice = GTNPriceInfo(minPriceJson as AnyObject);
+        if let minPriceObj = jsonObj["MinPrice"]{
+            self.minPrice = GTNPriceInfo(minPriceObj as AnyObject);
         }
         
-        if let maxPriceObj = jsonObj["MaxPrice"], let maxPriceJson = maxPriceObj{
-            self.maxPrice = GTNPriceInfo(maxPriceJson as AnyObject);
+        if let maxPriceObj = jsonObj["MaxPrice"]{
+            self.maxPrice = GTNPriceInfo(maxPriceObj as AnyObject);
         }
         
         if let vendorCountryCodeS = jsonObj["VendorCountryCode"] as? String { self.vendorCountryCode = vendorCountryCodeS };

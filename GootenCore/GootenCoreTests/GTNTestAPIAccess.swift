@@ -561,6 +561,46 @@ class GTNTestAPIAccess: XCTestCase {
         waitForExpectations(timeout: 15.0, handler: nil);
     }
     
+    func testOrderPriceEstimate() {
+        let expectation = self.expectation(description: "wait to for order price estimate");
+        
+        let core = GTNCore()
+        let config = GTNConfig();
+        config.recipeId = "00000000-0000-0000-0000-000000000000";
+        config.environment = GTNEnvironment.staging;
+        core.setConfig(config);
+        
+        let shippingAddress = GTNAddress(firstName: "Lepa", lastName: "Brena", line1: "641 Highland Ave", line2: "", city: "Los Angeles", state: "CA", countryCode: "US", postalCode: "90036", phone: "1234", email: "kiki@nini.com");
+        
+        let couponCodes = [""];
+        
+        let image1 = GTNOrderItemImage(url: "http://roa.h-cdn.co/assets/15/39/980x490/landscape-1443100986-x3.jpg", index: 1, thumbnailUrl: "", manipCommand: "");
+        let image2 = GTNOrderItemImage(url: "http://roa.h-cdn.co/assets/15/39/980x490/landscape-1443100986-x3.jpg", index: 1, thumbnailUrl: "", manipCommand: "");
+        
+        let orderItem1 = GTNOrderItem(sku: "CanvsWrp-BlkWrp-8x10", quantity: 1, shipCarrierMethod: 1, images: [image1, image2], meta: ["":""]);
+        let orderItem2 = GTNOrderItem(sku: "CanvsWrp-BlkWrp-8x10", quantity: 1, shipCarrierMethod: 1, images: [image2, image1], meta: ["":""]);
+        
+        let items = [orderItem1, orderItem2];
+        
+        core.orderPriceEstimate(shippingAddress: shippingAddress, items: items, currencyCode: "USD", couponCodes: couponCodes, success: { (priceEstimate) in
+            
+            XCTAssert(priceEstimate.items.formattedPrice == "$22.48")
+            XCTAssert(priceEstimate.items.price == 22.48)
+            XCTAssert(priceEstimate.shipping.formattedPrice == "$8.80")
+            XCTAssert(priceEstimate.shipping.price == 8.80)
+            XCTAssert(priceEstimate.tax.formattedPrice == "$0.00")
+            XCTAssert(priceEstimate.tax.price == 0.00)
+            
+            expectation.fulfill();
+        }) { (error) in
+            print("errorMessage: \(error.message())")
+            XCTAssert(error.message().characters.count == 0, "shouldn't be an error")
+            expectation.fulfill();
+        }
+        
+        waitForExpectations(timeout: 15.0, handler: nil);
+    }
+    
     // MARK:
     
     func testGetCountries(){
@@ -679,6 +719,6 @@ class GTNTestAPIAccess: XCTestCase {
     
     func testDictToString() {
         let params = urlConnection.stringFromParams(["key1":"value1", "key2":"value2"])
-        XCTAssert(params == "key1=value1&key2=value2", "bad parsing");
+        XCTAssert(params == "key1=value1&key2=value2" || params == "key2=value2&key1=value1", "bad parsing");
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B4030A141F41D20E0068A403 /* GTNPriceEstimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4030A131F41D20E0068A403 /* GTNPriceEstimate.swift */; };
 		B419B6621D3FD34D00F41D03 /* GTNCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B419B6611D3FD34D00F41D03 /* GTNCountry.swift */; };
 		B419B6641D3FDAE100F41D03 /* GTNCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B419B6631D3FDAE100F41D03 /* GTNCurrency.swift */; };
 		B419B6661D40D0A500F41D03 /* GTNUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B419B6651D40D0A500F41D03 /* GTNUserInfo.swift */; };
@@ -153,6 +154,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B4030A131F41D20E0068A403 /* GTNPriceEstimate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTNPriceEstimate.swift; sourceTree = "<group>"; };
 		B419B6611D3FD34D00F41D03 /* GTNCountry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTNCountry.swift; sourceTree = "<group>"; };
 		B419B6631D3FDAE100F41D03 /* GTNCurrency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTNCurrency.swift; sourceTree = "<group>"; };
 		B419B6651D40D0A500F41D03 /* GTNUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTNUserInfo.swift; sourceTree = "<group>"; };
@@ -412,23 +414,24 @@
 		B4BEE77E1D6D7A1F002A66B5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				B48211461D2A90A700D7779F /* GTNAPIClient.swift */,
+				B49F64E21D3CFB6000BC0DCC /* GTNAddress.swift */,
+				B419B6691D41006E00F41D03 /* GTNAddressValidation.swift */,
 				B46F1B781D2BF55A0078AB15 /* GTNHTMLUtils.swift */,
 				B4D752711D26A7CC0055307C /* GTNConfig.swift */,
-				B46F1B761D2BE0CC0078AB15 /* GTNDefaults.swift */,
-				B482114A1D2AA85000D7779F /* GTNUtils.swift */,
-				B49F64E21D3CFB6000BC0DCC /* GTNAddress.swift */,
-				B4ED20AD1D46322E004D2568 /* GTNPayment.swift */,
-				B419B66D1D422E3400F41D03 /* GTNPaymentBraintree.swift */,
-				B419B6691D41006E00F41D03 /* GTNAddressValidation.swift */,
 				B419B6611D3FD34D00F41D03 /* GTNCountry.swift */,
 				B419B6631D3FDAE100F41D03 /* GTNCurrency.swift */,
+				B46F1B761D2BE0CC0078AB15 /* GTNDefaults.swift */,
 				B49F64D61D379D2600BC0DCC /* GTNLayer.swift */,
 				B419B66F1D42321100F41D03 /* GTNOrderItem.swift */,
 				B419B6711D4232BD00F41D03 /* GTNOrderItemImage.swift */,
 				B49F64E01D3CF4A300BC0DCC /* GTNOrderStatus.swift */,
 				B4C80B881D3D06B500B1CFC9 /* GTNOrderStatusItem.swift */,
+				B4ED20AD1D46322E004D2568 /* GTNPayment.swift */,
+				B419B66D1D422E3400F41D03 /* GTNPaymentBraintree.swift */,
 				B46F1B741D2BDCD40078AB15 /* GTNProduct.swift */,
 				B4B22A961D2D3D7B009A1530 /* GTNPriceInfo.swift */,
+				B4030A131F41D20E0068A403 /* GTNPriceEstimate.swift */,
 				B4B22A981D2D3E74009A1530 /* GTNProductInfo.swift */,
 				B4B22A9A1D2D402C009A1530 /* GTNProductImage.swift */,
 				B4B22A9C1D2D4169009A1530 /* GTNProductCategory.swift */,
@@ -444,8 +447,8 @@
 				B49F64CA1D36731200BC0DCC /* GTNVariantOption.swift */,
 				B419B6651D40D0A500F41D03 /* GTNUserInfo.swift */,
 				B4B22A941D2D116F009A1530 /* GTNError.swift */,
+				B482114A1D2AA85000D7779F /* GTNUtils.swift */,
 				B4C9E01E1D2561B900BAC18E /* GTNURLConnection.swift */,
-				B48211461D2A90A700D7779F /* GTNAPIClient.swift */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -724,6 +727,7 @@
 				B419B6721D4232BD00F41D03 /* GTNOrderItemImage.swift in Sources */,
 				B419B6641D3FDAE100F41D03 /* GTNCurrency.swift in Sources */,
 				B49F64E11D3CF4A300BC0DCC /* GTNOrderStatus.swift in Sources */,
+				B4030A141F41D20E0068A403 /* GTNPriceEstimate.swift in Sources */,
 				B48D92701D6D886800106593 /* BTThreeDSecureLookupResult.m in Sources */,
 				B48D923F1D6D886800106593 /* BTClientStore.m in Sources */,
 				B4C9E01F1D2561B900BAC18E /* GTNURLConnection.swift in Sources */,

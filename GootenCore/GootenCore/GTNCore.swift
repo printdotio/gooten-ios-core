@@ -119,6 +119,14 @@ open class GTNCore : NSObject{
         };
     }
     
+    open func orderPriceEstimate(shippingAddress: GTNAddress, items: [GTNOrderItem], currencyCode: String, couponCodes: [String], success:@escaping (_ priceEstimate: GTNPriceEstimate)->(), failure:@escaping (_ error: GTNError)->()) {
+        restClient.orderPriceEstimate(shippingAddress: shippingAddress, items: items, currencyCode: currencyCode, couponCodes: couponCodes, success: { (priceEstimate) in
+            success(priceEstimate)
+        }) { (error) in
+            failure(error)
+        }
+    }
+    
     // MARK: Other
     
     open func getCountries(success:@escaping (_ countries: Array<GTNCountry>)->(), failure:@escaping (_ error: GTNError)->()) {
@@ -145,7 +153,7 @@ open class GTNCore : NSObject{
         };
     }
     
-    open  func convertCurrency(fromCurrencyCode: String, toCurrencyCode: String, amount: Double, success:@escaping (_ result: GTNPriceInfo)->(), failure:@escaping (_ error: GTNError)->()) {
+    open func convertCurrency(fromCurrencyCode: String, toCurrencyCode: String, amount: Double, success:@escaping (_ result: GTNPriceInfo)->(), failure:@escaping (_ error: GTNError)->()) {
         restClient.convertCurrency(fromCurrencyCode: fromCurrencyCode, toCurrencyCode: toCurrencyCode, amount: amount, success: { (result) in
             success(result);
         }) { (error) in

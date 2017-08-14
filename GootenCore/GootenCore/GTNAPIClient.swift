@@ -299,6 +299,58 @@ class GTNAPIClient {
         };
     }
     
+    func orderPriceEstimate(shippingAddress: GTNAddress, items: [GTNOrderItem], currencyCode: String, couponCodes: [String], success:@escaping (_ priceEstimate: GTNPriceEstimate)->(), failure:@escaping (_ error: GTNError)->()){
+        
+        // create items array
+        var itemsArr:[AnyObject] = [];
+        for orderItem in items {
+            itemsArr.append(orderItem.elements() as AnyObject);
+        }
+        
+        var jsonDict: Dictionary = ["ShipToAddress" :  shippingAddress.elements(),
+                                    "Items" : itemsArr,
+                                    "Payment" : ["CurrencyCode" : currencyCode],
+                                    "CouponCodes" : couponCodes] as [String : Any];
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)
+            
+            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
+                execute(path: kGTNRESTAPIPathPriceEstimate, method: kGTHttpMethodPOST, rawData: jsonString, success: { (responseObj) in
+                    
+                    // parse error if exist
+                    if let hadError = responseObj["HadError"] as? Bool{
+                        if hadError == true {
+                            var errorMessage = "";
+                            
+                            if let errors = responseObj["Errors"] as? [AnyObject]{
+                                for error in errors {
+                                    if let message = error["ErrorMessage"] as? String {
+                                        errorMessage += message;
+                                    }
+                                    
+                                    if let propertyName = error["PropertyName"] as? String {
+                                        errorMessage += ":" + propertyName + "\n";
+                                    }
+                                }
+                            }
+                            
+                            failure(GTNError(.custom, message: errorMessage));
+                            return;
+                        }
+                    }
+                    
+                    success(GTNPriceEstimate(responseObj));
+                    
+                }) { (error) in
+                    failure(error);
+                };
+            }
+        } catch {
+            failure(GTNError(.parseJSONFailed));
+        }
+    }
+    
     // main submit order function
     func orderSubmit(_ shippingAddress: GTNAddress, billingAddress: GTNAddress, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], isPreSubmit: Bool, nonce: String, success:@escaping (_ orderId: String)->(), failure:@escaping (_ error: GTNError)->()){
         
