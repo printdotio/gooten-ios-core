@@ -23,7 +23,7 @@ After configuration has been set all API requests will use specified Recipe ID.
 
 ## Gooten API
 
-- [Getting a User's Location](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-a-users-location)
+- [Getting a User's Location](https://github.com/printdotio/gooten-ios-core/blob/master/docs/gooten_core_sdk.md#getting-a-users-location)
 - [Getting a List of Products](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-a-list-of-products)
 - [Getting a List of SKUs (Product Variants) for a Product](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-a-list-of-skus-product-variants-for-a-product)
 - [Getting a SKU's Required Images](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-a-skus-required-images)
@@ -37,7 +37,7 @@ After configuration has been set all API requests will use specified Recipe ID.
 - [Getting Payment Validation](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-payment-validation)
 - [Getting an Order's Info](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-an-orders-info)
 
-####Other API
+#### Other API
 - [Getting Countries](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-countries)
 - [Getting Currencies](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-currencies)
 - [Currency Conversion](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#currency-conversion)
