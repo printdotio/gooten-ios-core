@@ -29,10 +29,10 @@ open class GTNOrderStatus: NSObject{
         if let idS = jsonObj["Id"] as? String { self.id = idS; }
         if let niceIdS = jsonObj["NiceId"] as? String { self.niceId = niceIdS; }
         if let sourceIdS = jsonObj["SourceId"] as? String { self.sourceId = sourceIdS; }
-        if let totalObj = jsonObj["Total"], let totalJson = totalObj { self.total = GTNPriceInfo(totalJson as AnyObject); }
-        if let sTotalObj = jsonObj["ShippingTotal"], let totalJson = sTotalObj { self.shippingTotal = GTNPriceInfo(totalJson as AnyObject); }
-        if let sAddressObj = jsonObj["ShippingAddress"], let sAddressJson = sAddressObj { self.shippingAddress = GTNAddress(sAddressJson as AnyObject); }
-        if let bAddressObj = jsonObj["BillingAddress"], let bAddressJson = bAddressObj { self.billingAddress = GTNAddress(bAddressJson as AnyObject); }
+        if let totalObj = jsonObj["Total"] { self.total = GTNPriceInfo(totalObj as AnyObject); }
+        if let sTotalObj = jsonObj["ShippingTotal"] { self.shippingTotal = GTNPriceInfo(sTotalObj as AnyObject); }
+        if let sAddressObj = jsonObj["ShippingAddress"] { self.shippingAddress = GTNAddress(sAddressObj as AnyObject); }
+        if let bAddressObj = jsonObj["BillingAddress"] { self.billingAddress = GTNAddress(bAddressObj as AnyObject); }
         if let metaS = jsonObj["Meta"] as? Dictionary<String, AnyObject> { self.meta = metaS; }
         
         if let items = jsonObj["Items"] as? Array<AnyObject> {

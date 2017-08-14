@@ -44,7 +44,7 @@ open class GTNProduct: NSObject{
         if let isFeaturedS = jsonObj["IsFeatured"] as? Bool { self.isFeatured = isFeaturedS; }
         if let isComingSoonS = jsonObj["IsComingSoon"] as? Bool { self.isComingSoon = isComingSoonS; }
         if let maxZoomS = jsonObj["MaxZoom"] as? Double { self.maxZoom = maxZoomS; }
-        if let retailPriceObj = jsonObj["RetailPrice"], let rpObj = retailPriceObj { self.retailPrice = GTNPriceInfo(rpObj as AnyObject); }
+        if let retailPriceObj = jsonObj["RetailPrice"] { self.retailPrice = GTNPriceInfo(retailPriceObj as AnyObject); }
         
         if let infoArr = jsonObj["Info"] as? [AnyObject] {
             for infoObj in infoArr {
@@ -58,8 +58,8 @@ open class GTNProduct: NSObject{
             }
         }
         
-        if let priceObj = jsonObj["PriceInfo"],let pObj = priceObj {
-            self.priceInfo = GTNPriceInfo(pObj as AnyObject);
+        if let priceObj = jsonObj["PriceInfo"] {
+            self.priceInfo = GTNPriceInfo(priceObj as AnyObject);
             
             if let categoriesArr = jsonObj["Categories"] as? [AnyObject] {
                 for catObj in categoriesArr {

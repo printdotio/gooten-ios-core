@@ -31,8 +31,8 @@ open class GTNOrderStatusItem: NSObject{
         if let productS = jsonObj["Product"] as? String { self.product = productS; }
         if let quantityS = jsonObj["Quantity"] as? Int { self.quantity = quantityS; }
         if let statusS = jsonObj["Status"] as? String { self.status = statusS; }
-        if let priceObj = jsonObj["Price"], let priceJson = priceObj { self.price = GTNPriceInfo(priceJson as AnyObject); }
-        if let disObj = jsonObj["DiscountAmount"], let disJson = disObj { self.discountAmount = GTNPriceInfo(disJson as AnyObject); }
+        if let priceObj = jsonObj["Price"] { self.price = GTNPriceInfo(priceObj as AnyObject); }
+        if let disObj = jsonObj["DiscountAmount"] { self.discountAmount = GTNPriceInfo(disObj as AnyObject); }
         if let metaS = jsonObj["Meta"] as? Dictionary<String, AnyObject> { self.meta = metaS; }
         // shipments TO-DO
     }

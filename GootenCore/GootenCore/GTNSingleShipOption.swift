@@ -27,7 +27,7 @@ open class GTNSingleShipOption: NSObject{
         if let carrierNameS = jsonObj["CarrierName"] as? String { self.carrierName = carrierNameS };
         if let methodTypeS = jsonObj["MethodType"] as? String { self.methodType = methodTypeS };
         if let nameS = jsonObj["Name"] as? String { self.name = nameS };
-        if let priceObj = jsonObj["Price"], let priceS = priceObj { self.price = GTNPriceInfo(priceS as AnyObject); }
+        if let priceObj = jsonObj["Price"] { self.price = GTNPriceInfo(priceObj as AnyObject); }
         if let idS = jsonObj["Id"] as? Int { self.id = idS };
         if let estBusinessDaysTilDeliveryS = jsonObj["EstBusinessDaysTilDelivery"] as? Int { self.estBusinessDaysTilDelivery = estBusinessDaysTilDeliveryS };
         if let methodIdS = jsonObj["MethodId"] as? Int { self.methodId = methodIdS };

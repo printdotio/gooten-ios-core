@@ -29,8 +29,8 @@ open class GTNCountry: NSObject {
         if let measurementCodeS = jsonObj["MeasurementCode"] as? String { self.measurementCode = measurementCodeS; }
         if let flagUrlS = jsonObj["FlagUrl"] as? String { self.flagUrl = flagUrlS; }
         
-        if let defCurrObj = jsonObj["DefaultCurrency"], let defCurrJson = defCurrObj {
-            self.defaultCurrency = GTNCurrency(defCurrJson as AnyObject);
+        if let defCurrObj = jsonObj["DefaultCurrency"] {
+            self.defaultCurrency = GTNCurrency(defCurrObj as AnyObject);
         }
     }
 }

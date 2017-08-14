@@ -28,8 +28,8 @@ open class GTNProductVariant: NSObject{
             }
         }
         
-        if let priceInfoObj = jsonObj["PriceInfo"], let priceInfoS = priceInfoObj {
-            self.priceInfo = GTNPriceInfo(priceInfoS as AnyObject);
+        if let priceInfoObj = jsonObj["PriceInfo"] {
+            self.priceInfo = GTNPriceInfo(priceInfoObj as AnyObject);
         }
         
         if let skuS = jsonObj["Sku"] as? String { self.sku = skuS; }

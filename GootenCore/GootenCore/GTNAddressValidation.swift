@@ -24,8 +24,8 @@ open class GTNAddressValidation: NSObject {
         if let isValidS = jsonObj["IsValid"] as? Bool { self.isValid = isValidS; }
         if let reasonS = jsonObj["Reason"] as? String { self.reason = reasonS; }
         if let scoreS = jsonObj["Score"] as? Int { self.score = scoreS; }
-        if let pAddressObj = jsonObj["ProposedAddress"], let pAddressJson = pAddressObj {
-            self.proposedAddress = GTNProposedAddress(pAddressJson as AnyObject);            
+        if let pAddressObj = jsonObj["ProposedAddress"] {
+            self.proposedAddress = GTNProposedAddress(pAddressObj as AnyObject);
         }
     }
 }
