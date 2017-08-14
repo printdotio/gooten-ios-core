@@ -33,6 +33,7 @@ After configuration has been set all API requests will use specified Recipe ID.
 - [Submitting an Order via Braintree](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#submitting-an-order-via-braintree-credit-card)
 - [Submitting an Order via ApplePay](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#submitting-order-via-applepay)
 - [Submitting an Order via PayPal](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#submitting-order-via-paypal)
+- [Getting an Order price estimate]()
 - [Getting Payment Validation](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-payment-validation)
 - [Getting an Order's Info](https://github.com/printdotio/gooten-ios-core-private/blob/master/docs/gooten_core_sdk.md#getting-an-orders-info)
 
@@ -447,6 +448,51 @@ core.orderSubmitPaypal(shippingAddress: shippingAddress, payment: payment, items
 }) { (error) in
 
 };
+```
+### Getting Order Price Estimate
+Used to estimate cost of the order, including any coupon discounts.
+
+- ```shippingAddress``` (```GTNAddress```) required.
+	- ```firstName``` - first name of user
+    - ```lastName``` - last name of user
+    - ```line1``` - shipping address
+    - ```line2``` - second shipping address (optional)
+    - ```city``` - shipping city
+    - ```state``` - shipping state if exist
+    - ```countryCode``` - shipping 2-letter country code
+    - ```postalCode``` - shipping postal code
+    - ```phone``` - user's phone number
+    - ```email``` -  user's email
+- ```items``` array of ```GTNOrderItem``` required.
+	- ```sku``` - SKU of product
+    - ```quantity``` - number of items with this SKU
+    - ```shipCarrierMethod``` - Id of ship carrier method 
+    - ```meta``` - meta data (optional)
+    - ```images``` - array of ```GTNOrderItemImage```
+    	- ```url``` - url of image
+    	- ```index``` - index
+    	- ```thumbnailUrl``` - thumbnail url
+    	- ```manipCommand``` - manip command
+- ```currencyCode``` - currency code.
+- ```couponCodes``` - array coupon codes. Optional.
+
+```Objective-C
+// Objective C
+[core orderPriceEstimate:shippingAddress items:items currencyCode:currencyCode couponCodes:couponCodes
+success:^(GTNPriceEstimate * _Nonnull priceEstimate) {
+
+} failure:^(GTNError * _Nonnull error) {
+            
+}];
+```
+
+```Swift
+// Swift
+core.orderPriceEstimate(shippingAddress: shippingAddress, items: items, currencyCode: currencyCode, couponCodes: couponCodes, success: { (priceEstimate) in
+
+}) { (error) in
+
+}
 ```
 
 ### Getting Payment Validation
