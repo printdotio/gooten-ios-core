@@ -8,12 +8,12 @@
 
 import Foundation
 
-public class GTNProductTemplate: NSObject{
+open class GTNProductTemplate: NSObject{
     
-    public var name: String = "";
-    public var imageUrl: String = "";
-    public var isDefault: Bool = false;
-    public var spaces: Array<GTNSpace> = [];
+    open var name: String = "";
+    open var imageUrl: String = "";
+    open var isDefault: Bool = false;
+    open var spaces: Array<GTNSpace> = [];
     
     public override init() {
         super.init();
@@ -24,7 +24,7 @@ public class GTNProductTemplate: NSObject{
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject){
+    func parseJson(_ jsonObj: AnyObject){
         if let nameS = jsonObj["Name"] as? String { self.name = nameS; }
         if let imageUrlS = jsonObj["ImageUrl"] as? String { self.imageUrl = imageUrlS; }
         if let isDefaultS = jsonObj["IsDefault"] as? Bool { self.isDefault = isDefaultS; }

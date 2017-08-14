@@ -8,24 +8,24 @@
 
 import Foundation
 
-public class GTNAddressValidation: NSObject {
+open class GTNAddressValidation: NSObject {
 
-    public var isValid: Bool = false;
-    public var reason: String = "";
-    public var score: Int = -999;
-    public var proposedAddress: GTNProposedAddress = GTNProposedAddress();
+    open var isValid: Bool = false;
+    open var reason: String = "";
+    open var score: Int = -999;
+    open var proposedAddress: GTNProposedAddress = GTNProposedAddress();
     
     init(_ jsonObj: AnyObject) {
         super.init();
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject){
+    func parseJson(_ jsonObj: AnyObject){
         if let isValidS = jsonObj["IsValid"] as? Bool { self.isValid = isValidS; }
         if let reasonS = jsonObj["Reason"] as? String { self.reason = reasonS; }
         if let scoreS = jsonObj["Score"] as? Int { self.score = scoreS; }
-        if let pAddressObj = jsonObj["ProposedAddress"], pAddressJson = pAddressObj {
-            self.proposedAddress = GTNProposedAddress(pAddressJson);            
+        if let pAddressObj = jsonObj["ProposedAddress"], let pAddressJson = pAddressObj {
+            self.proposedAddress = GTNProposedAddress(pAddressJson as AnyObject);            
         }
     }
 }

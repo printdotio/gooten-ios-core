@@ -9,19 +9,19 @@
 import Foundation
 
 @objc public enum GTNErrorCode: Int {
-    case InvalidURL
-    case InvalidTemplate
-    case NoInternetConnection
-    case NoResponseFromServer
-    case NoItems
-    case ParseJSONFailed
-    case Custom
-    case InvalidConfiguration
+    case invalidURL
+    case invalidTemplate
+    case noInternetConnection
+    case noResponseFromServer
+    case noItems
+    case parseJSONFailed
+    case custom
+    case invalidConfiguration
 }
 
-public class GTNError: NSObject, ErrorType {
+open class GTNError: NSObject, Error {
     
-    public var errorCode: GTNErrorCode;
+    open var errorCode: GTNErrorCode;
     var errorMessage: String = "";
     
     // API
@@ -38,16 +38,16 @@ public class GTNError: NSObject, ErrorType {
         self.errorMessage = message;
     }
     
-    public func message()->String{
+    open func message()->String{
         switch self.errorCode {
-        case .InvalidURL: return invalidURL;
-        case .InvalidTemplate: return invalidTemplate;
-        case .NoInternetConnection: return noInternetConnection;
-        case .NoResponseFromServer: return noResponseFromServer;
-        case .NoItems: return noItems;
-        case .ParseJSONFailed: return parseJSONFailed;
-        case .Custom: return self.errorMessage;
-        case .InvalidConfiguration: return self.invalidConfiguration;
+        case .invalidURL: return invalidURL;
+        case .invalidTemplate: return invalidTemplate;
+        case .noInternetConnection: return noInternetConnection;
+        case .noResponseFromServer: return noResponseFromServer;
+        case .noItems: return noItems;
+        case .parseJSONFailed: return parseJSONFailed;
+        case .custom: return self.errorMessage;
+        case .invalidConfiguration: return self.invalidConfiguration;
         }
     }
 }

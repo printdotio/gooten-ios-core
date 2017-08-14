@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class GTNPaymentBraintree: GTNPayment {
+open class GTNPaymentBraintree: GTNPayment {
     
-    public var braintreeEncryptedCCNumber: String = "";
-    public var braintreeEncryptedCCExpDate: String = "";
-    public var braintreeEncryptedCCV: String = "";
+    open var braintreeEncryptedCCNumber: String = "";
+    open var braintreeEncryptedCCExpDate: String = "";
+    open var braintreeEncryptedCCV: String = "";
     
     public init(braintreeEncryptedCCNumber: String, braintreeEncryptedCCExpDate: String, braintreeEncryptedCCV: String, currencyCode: String, total: Double) {
         super.init(currencyCode: currencyCode, total: total);

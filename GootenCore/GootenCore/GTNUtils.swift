@@ -8,16 +8,16 @@
 
 import Foundation
 
-func printgt(items: Any...){
+func printgt(_ items: Any...){
     if !GTNConfig.sharedInstance.turnOffLogs {
         print(items);
     }
 }
 
-func gtnUtilsReplace(searchString: String, pattern: String, replacementPattern: String) -> String?{
+func gtnUtilsReplace(_ searchString: String, pattern: String, replacementPattern: String) -> String?{
     do {
-        let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.DotMatchesLineSeparators);
-        let replacedString = regex.stringByReplacingMatchesInString(searchString, options: NSMatchingOptions.WithoutAnchoringBounds, range: NSMakeRange(0, searchString.characters.count), withTemplate: replacementPattern)
+        let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.dotMatchesLineSeparators);
+        let replacedString = regex.stringByReplacingMatches(in: searchString, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSMakeRange(0, searchString.characters.count), withTemplate: replacementPattern)
         return replacedString}
     catch let error as NSError {
         printgt("GTNUtils.replace error: \(error)");

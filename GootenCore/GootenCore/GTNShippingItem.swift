@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class GTNShippingItem: NSObject{
+open class GTNShippingItem: NSObject{
     
-    public var sku: String = "";
-    public var quantity: Int = 0;
+    open var sku: String = "";
+    open var quantity: Int = 0;
     
     public init(sku skuS: String, quantity: Int) {
         super.init();
@@ -20,6 +20,6 @@ public class GTNShippingItem: NSObject{
     }
     
     func dict()->Dictionary<String, AnyObject>{
-        return ["SKU" : self.sku, "Quantity" : self.quantity];
+        return ["SKU" : self.sku as AnyObject, "Quantity" : self.quantity as AnyObject];
     }
 }

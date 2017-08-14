@@ -8,26 +8,26 @@
 
 import Foundation
 
-public class GTNShipPriceEstimate: NSObject {
+open class GTNShipPriceEstimate: NSObject {
 
-    public var minPrice: GTNPriceInfo = GTNPriceInfo();
-    public var maxPrice: GTNPriceInfo = GTNPriceInfo();
-    public var vendorCountryCode: String = "";
-    public var canShipExpedited: Bool = false;
-    public var estShipDays: Int = 0;
+    open var minPrice: GTNPriceInfo = GTNPriceInfo();
+    open var maxPrice: GTNPriceInfo = GTNPriceInfo();
+    open var vendorCountryCode: String = "";
+    open var canShipExpedited: Bool = false;
+    open var estShipDays: Int = 0;
     
     init(_ jsonObj: AnyObject) {
         super.init();
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject) {
-        if let minPriceObj = jsonObj["MinPrice"], minPriceJson = minPriceObj{
-            self.minPrice = GTNPriceInfo(minPriceJson);
+    func parseJson(_ jsonObj: AnyObject) {
+        if let minPriceObj = jsonObj["MinPrice"], let minPriceJson = minPriceObj{
+            self.minPrice = GTNPriceInfo(minPriceJson as AnyObject);
         }
         
-        if let maxPriceObj = jsonObj["MaxPrice"], maxPriceJson = maxPriceObj{
-            self.maxPrice = GTNPriceInfo(maxPriceJson);
+        if let maxPriceObj = jsonObj["MaxPrice"], let maxPriceJson = maxPriceObj{
+            self.maxPrice = GTNPriceInfo(maxPriceJson as AnyObject);
         }
         
         if let vendorCountryCodeS = jsonObj["VendorCountryCode"] as? String { self.vendorCountryCode = vendorCountryCodeS };

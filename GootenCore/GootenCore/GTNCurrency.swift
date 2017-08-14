@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class GTNCurrency: NSObject {
+open class GTNCurrency: NSObject {
     
-    public var name: String = "";
-    public var code: String = "";
-    public var format: String = "";
+    open var name: String = "";
+    open var code: String = "";
+    open var format: String = "";
     
     public override init() {
         super.init();
@@ -23,7 +23,7 @@ public class GTNCurrency: NSObject {
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject){
+    func parseJson(_ jsonObj: AnyObject){
         if let nameS = jsonObj["Name"] as? String { self.name = nameS; }
         if let codeS = jsonObj["Code"] as? String { self.code = codeS; }
         if let formatS = jsonObj["Format"] as? String { self.format = formatS; }

@@ -22,7 +22,7 @@ public class GTNPriceInfo: NSObject{
     
     init(_ jsonObj: AnyObject) {
         super.init();
-        self.parseJson(jsonObj);
+        self.parseJson(jsonObj: jsonObj);
     }
     
     func parseJson(jsonObj: AnyObject) {

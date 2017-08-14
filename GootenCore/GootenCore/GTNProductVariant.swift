@@ -8,28 +8,28 @@
 
 import Foundation
 
-public class GTNProductVariant: NSObject{
+open class GTNProductVariant: NSObject{
     
-    public var options: Array<GTNVariantOption> = [];
-    public var priceInfo: GTNPriceInfo = GTNPriceInfo();
-    public var sku: String = "";
-    public var maxImages: Int = 0;
-    public var hasTemplates: Bool = false;
+    open var options: Array<GTNVariantOption> = [];
+    open var priceInfo: GTNPriceInfo = GTNPriceInfo();
+    open var sku: String = "";
+    open var maxImages: Int = 0;
+    open var hasTemplates: Bool = false;
     
     init(_ jsonObj: AnyObject) {
         super.init();
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject) {
+    func parseJson(_ jsonObj: AnyObject) {
         if let optionsArr = jsonObj["Options"] as? [AnyObject] {
             for optionObj in optionsArr {
                 self.options.append(GTNVariantOption(optionObj));
             }
         }
         
-        if let priceInfoObj = jsonObj["PriceInfo"], priceInfoS = priceInfoObj {
-            self.priceInfo = GTNPriceInfo(priceInfoS);
+        if let priceInfoObj = jsonObj["PriceInfo"], let priceInfoS = priceInfoObj {
+            self.priceInfo = GTNPriceInfo(priceInfoS as AnyObject);
         }
         
         if let skuS = jsonObj["Sku"] as? String { self.sku = skuS; }

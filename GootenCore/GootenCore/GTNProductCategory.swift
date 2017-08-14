@@ -8,17 +8,17 @@
 
 import Foundation
 
-public class GTNProductCategory: NSObject{
+open class GTNProductCategory: NSObject{
     
-    public var name: String = "";
-    public var id: Int = 1;
+    open var name: String = "";
+    open var id: Int = 1;
     
     init(_ jsonObj: AnyObject) {
         super.init();
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject) {
+    func parseJson(_ jsonObj: AnyObject) {
         if let nameS = jsonObj["Name"] as? String { self.name = nameS; }
         
         if let idObj = jsonObj["Id"] {

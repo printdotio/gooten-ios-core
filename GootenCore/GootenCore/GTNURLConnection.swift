@@ -9,8 +9,8 @@
 import Foundation
 
 enum GTNSerializer {
-    case JSON
-    case RawData
+    case json
+    case rawData
 }
 
 let kGTHttpMethodGET = "GET";
@@ -18,120 +18,120 @@ let kGTHttpMethodPOST = "POST";
 
 class GTNURLConnection {
     
-    var baseURL : NSURL;
+    var baseURL : URL;
     var rSerializer : GTNSerializer;
     
-    init(URL: NSURL){
+    init(URL: Foundation.URL){
         baseURL = URL;
-        rSerializer = .JSON
+        rSerializer = .json
     }
     
-    func setResponseSerializer(rs: GTNSerializer){
+    func setResponseSerializer(_ rs: GTNSerializer){
         rSerializer = rs;
     }
     
-    func postToPath(path: String, parameters: AnyObject, success:(response: AnyObject) -> (), failure:(error: GTNError) -> ()){
-        var dataParams : NSData;
+    func postToPath(_ path: String, parameters: AnyObject, success:@escaping (_ response: AnyObject) -> (), failure:@escaping (_ error: GTNError) -> ()){
+        var dataParams : Data;
         
         if parameters is Dictionary<String, String> {
             dataParams = dataFromParameters(parameters as! Dictionary<String, String>);
         } else {
-            dataParams = (parameters as? NSData)!;
+            dataParams = (parameters as? Data)!;
         }
-        executeMethod(kGTHttpMethodPOST, path: path, dataParams: dataParams, success: success, failure: failure);
+        executeMethod(kGTHttpMethodPOST, path: path, dataParams: dataParams as AnyObject, success: success, failure: failure);
     }
     
-    func getFromPath(path: String, parameters: Dictionary<String, String>, success:(response: AnyObject) -> (), failure:(error: GTNError) -> ()){
+    func getFromPath(_ path: String, parameters: Dictionary<String, String>, success: @escaping (_ response: AnyObject) -> (), failure:@escaping (_ error: GTNError) -> ()){
         let dataParams = stringFromParams(parameters);
-        executeMethod(kGTHttpMethodGET, path: path, dataParams: dataParams, success: success, failure: failure);
+        executeMethod(kGTHttpMethodGET, path: path, dataParams: dataParams as AnyObject, success: success, failure: failure);
     }
     
-    func upload(data: NSData, path: String, success:(response: AnyObject) -> (), failure:(errorMsg: String) -> ()){
+    func upload(_ data: Data, path: String, success:(_ response: AnyObject) -> (), failure:(_ errorMsg: String) -> ()){
         // TO-DO
     }
     
-    func downloadFileWithUrl(fileUrl: String, progress:(totalBytesRead: Double, totalBytesExpectedToRead: Double) -> (), success:(response: AnyObject) -> (), failure:(errorMsg: String) -> ()){
+    func downloadFileWithUrl(_ fileUrl: String, progress:(_ totalBytesRead: Double, _ totalBytesExpectedToRead: Double) -> (), success:(_ response: AnyObject) -> (), failure:(_ errorMsg: String) -> ()){
         // TO-DO
     }
     
     // MARK: Main call
-    func executeMethod(method: String, path: String, dataParams: AnyObject, success:(response: AnyObject) -> (), failure:(error: GTNError) -> ()){
+    func executeMethod(_ method: String, path: String, dataParams: AnyObject, success:@escaping (_ response: AnyObject) -> (), failure:@escaping (_ error: GTNError) -> ()){
         var sUrl = "\(baseURL.absoluteString)\(path)";
         
         if method == kGTHttpMethodGET && dataParams is String{
             sUrl = "\(sUrl)\(dataParams)";
         }
         
-        guard let url = NSURL(string: sUrl)
+        guard let url = URL(string: sUrl)
             else {
-                failure(error: GTNError(.InvalidURL));
+                failure(GTNError(.invalidURL));
                 return;
         };
         
-        let request = NSMutableURLRequest(URL: url);
+        let request = NSMutableURLRequest(url: url);
         request.timeoutInterval = 60.0;
         
         if method == kGTHttpMethodPOST{
-            if dataParams is NSData {
-                request.HTTPBody = dataParams as? NSData;
+            if dataParams is Data {
+                request.httpBody = dataParams as? Data;
             }
             request.addValue("application/json", forHTTPHeaderField: "Content-Type");
         }
         
-        request.HTTPMethod = method;
+        request.httpMethod = method;
         
-        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data: NSData?, response: NSURLResponse?, error: NSError?) in
-            dispatch_async(dispatch_get_main_queue(), {
+        URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+            DispatchQueue.main.async(execute: {
                 if error != nil {
                     //printgt("GTNURLConnection error: \(error.debugDescription)");
-                    failure(error: GTNError(.NoInternetConnection));
+                    failure(GTNError(.noInternetConnection));
                     return;
                 }
                 
                 if data == nil {
-                    failure(error: GTNError(.NoResponseFromServer));
+                    failure(GTNError(.noResponseFromServer));
                 }
                 
                 switch self.rSerializer {
-                case .RawData:
+                case .rawData:
                     guard let unwrappData = data
                         else {
-                            failure(error: GTNError(.NoResponseFromServer));
+                            failure(GTNError(.noResponseFromServer));
                             return;
                     };
-                    success(response: unwrappData);
+                    success(unwrappData as AnyObject);
                     
                     break;
                     
-                case .JSON:
-                    let jsonResult : AnyObject;
+                case .json:
+                    let jsonResult : Any;
                     do {
                         guard let unwrappData = data
                             else {
-                                failure(error: GTNError(.NoResponseFromServer));
+                                failure(GTNError(.noResponseFromServer));
                                 return;
                         }
                         
-                        jsonResult = try NSJSONSerialization.JSONObjectWithData(unwrappData, options:.AllowFragments);
-                        success(response: jsonResult);
+                        jsonResult = try JSONSerialization.jsonObject(with: unwrappData, options:.allowFragments);
+                        success(jsonResult as AnyObject);
                         
                     } catch _ as NSError {
-                        failure(error: GTNError(.ParseJSONFailed));
+                        failure(GTNError(.parseJSONFailed));
                     }
                     break;
                 }
             });
-            }.resume();
-        
+
+        }).resume()
     }
     
     // MARK: Other
-    func dataFromParameters(params: Dictionary<String,String>) -> NSData{
+    func dataFromParameters(_ params: Dictionary<String,String>) -> Data{
         let mString = stringFromParams(params);
-        return mString.dataUsingEncoding(NSUTF8StringEncoding)!;
+        return mString.data(using: String.Encoding.utf8)!;
     }
     
-    func stringFromParams(params: Dictionary<String,String>) -> String {
+    func stringFromParams(_ params: Dictionary<String,String>) -> String {
         if params.count == 0 {
             return "";
         }
@@ -143,7 +143,7 @@ class GTNURLConnection {
                 else { return ""; }
             
             let decodedValue = value.stringByDecodingHTMLEntities
-            let newValue = String(decodedValue).stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+            let newValue = String(decodedValue).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             mString += "\(key)=\(newValue!)&";
         }
         

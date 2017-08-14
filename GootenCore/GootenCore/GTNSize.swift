@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class GTNSize: NSObject {
+open class GTNSize: NSObject {
     
-    public var width: Int = 0;
-    public var height: Int = 0;
+    open var width: Int = 0;
+    open var height: Int = 0;
     
     public init(width: Int, height: Int) {
         super.init();

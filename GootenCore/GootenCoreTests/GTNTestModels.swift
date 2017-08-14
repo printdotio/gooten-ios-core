@@ -36,10 +36,9 @@ class GTNTestModels: XCTestCase {
     // MARK: Product
     func testProductCreationFromHardcodedJSON(){
         do {
-            if let data = productJSON.dataUsingEncoding(NSUTF8StringEncoding){
-                print("IMAMO DATA");
-                let parsedObject = try NSJSONSerialization.JSONObjectWithData(data, options:.AllowFragments)
-                let product = GTNProduct(parsedObject);
+            if let data = productJSON.data(using: String.Encoding.utf8){
+                let parsedObject = try JSONSerialization.jsonObject(with: data, options:.allowFragments)
+                let product = GTNProduct(parsedObject as AnyObject);
                 GTNTestModels.verifyProduct(product);
                 print("prosao");
             }
@@ -49,7 +48,7 @@ class GTNTestModels: XCTestCase {
     }
     
     func testProductCreationFromServer(){
-        let expectation = expectationWithDescription("wait to get all products");
+        let expectation = self.expectation(description: "wait to get all products");
         
         core.getProducts(success: { (products) in
             for product in products{
@@ -61,10 +60,10 @@ class GTNTestModels: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(10.0, handler: nil);
+        waitForExpectations(timeout: 10.0, handler: nil);
     }
     
-    internal static func verifyProduct(product: GTNProduct){
+    internal static func verifyProduct(_ product: GTNProduct){
         XCTAssert(product.id > 0, "missing product id");
         XCTAssert(product.name.characters.count > 0, "missing product name");
         XCTAssert(product.shortDescription.characters.count > 0, "missing short description");
@@ -89,7 +88,7 @@ class GTNTestModels: XCTestCase {
     
     // MARK: Price info
     func testPriceInfoCreation() {
-        let expectation = expectationWithDescription("wait to get all products");
+        let expectation = self.expectation(description: "wait to get all products");
         
         core.getProducts(success: { (products) in
             for product in products{
@@ -101,10 +100,10 @@ class GTNTestModels: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(10.0, handler: nil);
+        waitForExpectations(timeout: 10.0, handler: nil);
     }
     
-    internal static func verifyPriceInfo(priceInfo: GTNPriceInfo, isDiscount: Bool = false){
+    internal static func verifyPriceInfo(_ priceInfo: GTNPriceInfo, isDiscount: Bool = false){
         if !isDiscount { XCTAssert(priceInfo.price > 0.0, "should be > 0"); }
         XCTAssert(priceInfo.currencyCode.characters.count > 0, "should be > 0");
         XCTAssert(priceInfo.formattedPrice.characters.count > 0, "should be > 0");
@@ -114,7 +113,7 @@ class GTNTestModels: XCTestCase {
     
     // MARK: Product info
     func testProductInfoCreation() {
-        let expectation = expectationWithDescription("wait to get all products");
+        let expectation = self.expectation(description: "wait to get all products");
         
         core.getProducts(success: { (products) in
             for product in products{
@@ -128,17 +127,17 @@ class GTNTestModels: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(10.0, handler: nil);
+        waitForExpectations(timeout: 10.0, handler: nil);
     }
     
-    internal static func verifyProductInfo(info: GTNProductInfo){
+    internal static func verifyProductInfo(_ info: GTNProductInfo){
         XCTAssert(info.content.count > 0, "missing content");
         XCTAssert(info.contentType.characters.count > 0, "missing content type");
     }
     
     // MARK: Product image
     func testProductImageCreation(){
-        let expectation = expectationWithDescription("wait to get all products");
+        let expectation = self.expectation(description: "wait to get all products");
         
         core.getProducts(success: { (products) in
             for product in products{
@@ -152,17 +151,17 @@ class GTNTestModels: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(10.0, handler: nil);
+        waitForExpectations(timeout: 10.0, handler: nil);
     }
     
-    internal static func verifyProductImage(image: GTNProductImage){
+    internal static func verifyProductImage(_ image: GTNProductImage){
         XCTAssert(image.url.characters.count > 1, "missing image url");
         XCTAssert(image.types.count > 0, "missing image types");
     }
     
     // MARK: Product category
     func testProductCategoryCreation() {
-        let expectation = expectationWithDescription("wait to get all products");
+        let expectation = self.expectation(description: "wait to get all products");
         
         core.getProducts(success: { (products) in
             for product in products{
@@ -176,14 +175,14 @@ class GTNTestModels: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(10.0, handler: nil);
+        waitForExpectations(timeout: 10.0, handler: nil);
     }
     
     func testProductCategoryCreationWithJSON() {
         do {
-            let data = productCategoryJSON.dataUsingEncoding(NSUTF8StringEncoding);
-            let parsedObject = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableLeaves);
-            let category = GTNProductCategory(parsedObject);
+            let data = productCategoryJSON.data(using: String.Encoding.utf8);
+            let parsedObject = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableLeaves);
+            let category = GTNProductCategory(parsedObject as AnyObject);
             
             XCTAssert(category.id == 123, "this should be equal");
             XCTAssert(category.name == "Test", "this should be equal");
@@ -192,18 +191,18 @@ class GTNTestModels: XCTestCase {
         }
     }
     
-    internal static func verifyProductCategory(category: GTNProductCategory){
+    internal static func verifyProductCategory(_ category: GTNProductCategory){
         XCTAssert(category.name.characters.count > 0, "missing category name");
     }
     
     // MARK: Product variant
-    internal static func verifyVariant(variant: GTNProductVariant){
+    internal static func verifyVariant(_ variant: GTNProductVariant){
         XCTAssert(variant.sku.characters.count > 0, "missing sku");
         GTNTestModels.verifyPriceInfo(variant.priceInfo);
     }
     
     // MARK: Variant option
-    internal static func verifyVariantOption(option: GTNVariantOption){
+    internal static func verifyVariantOption(_ option: GTNVariantOption){
         XCTAssert(option.optionId.characters.count > 0, "optionIs is missing");
         XCTAssert(option.valueId.characters.count > 0, "valueId is missing");
         XCTAssert(option.name.characters.count > 0, "name is missing");
@@ -212,22 +211,22 @@ class GTNTestModels: XCTestCase {
     }
     
     // MARK: Product template
-    internal static func verifyTemplate(template: GTNProductTemplate){
+    internal static func verifyTemplate(_ template: GTNProductTemplate){
         XCTAssert(template.name.characters.count > 0, "missing template name");
         XCTAssert(template.imageUrl.characters.count > 0, "missing image url");
     }
     
     // MARK: Space
-    internal static func verifySpace(space: GTNSpace){
+    internal static func verifySpace(_ space: GTNSpace){
         XCTAssert(space.index > -1, "invalid space index");
     }
     
     // MARK: Layer
     func testLayerCreationWithMissingData() {
         do {
-            let data = layerJSON.dataUsingEncoding(NSUTF8StringEncoding);
-            let parsedObject = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableLeaves);
-            let layer = GTNLayer(parsedObject);
+            let data = layerJSON.data(using: String.Encoding.utf8);
+            let parsedObject = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableLeaves);
+            let layer = GTNLayer(parsedObject as AnyObject);
             
             XCTAssert(layer.id == "3ffa", "this should be equal");
             XCTAssert(layer.type == "Image", "this should not be empty");
@@ -237,13 +236,13 @@ class GTNTestModels: XCTestCase {
         }
     }
     
-    internal static func verifyLayer(layer: GTNLayer){
+    internal static func verifyLayer(_ layer: GTNLayer){
         XCTAssert(layer.type.characters.count > 0, "missing layer type");
         XCTAssert(layer.zIndex > -1, "invalid Z index");
     }
     
     // MARK: Address
-    internal static func verifyAddress(address: GTNAddress){
+    internal static func verifyAddress(_ address: GTNAddress){
         XCTAssert(address.firstName.characters.count > 0, "should be > 0");
         XCTAssert(address.lastName.characters.count > 0, "should be > 0");
         XCTAssert(address.line1.characters.count > 0, "should be > 0");
@@ -257,7 +256,7 @@ class GTNTestModels: XCTestCase {
     }
     
     // MARK: Shipping price estimate
-    internal static func verifyShipPriceEstimate(price: GTNShipPriceEstimate){
+    internal static func verifyShipPriceEstimate(_ price: GTNShipPriceEstimate){
         GTNTestModels.verifyPriceInfo(price.minPrice);
         GTNTestModels.verifyPriceInfo(price.maxPrice);
         XCTAssert(price.vendorCountryCode.characters.count > 0, "missing vendor country code");
@@ -265,13 +264,13 @@ class GTNTestModels: XCTestCase {
     }
     
     // MARK: Shipping price
-    internal static func verifyShippingOption(sPrice: GTNShippingOption){
+    internal static func verifyShippingOption(_ sPrice: GTNShippingOption){
         XCTAssert(sPrice.skus.count > 0, "missing skus");
         XCTAssert(sPrice.shipOptions.count > 0, "missing ship options");
     }
     
     // MARK: Shipping option
-    internal static func verifySingleShipOption(option: GTNSingleShipOption){
+    internal static func verifySingleShipOption(_ option: GTNSingleShipOption){
         XCTAssert(option.carrierName.characters.count > 0, "missing carrier name");
         XCTAssert(option.methodType.characters.count > 0, "missing method type");
         XCTAssert(option.name.characters.count > 0, "missing name");
@@ -279,7 +278,7 @@ class GTNTestModels: XCTestCase {
     }
     
     // MARK: Shipping item
-    internal static func verifyShippingItem(item: GTNShippingItem){
+    internal static func verifyShippingItem(_ item: GTNShippingItem){
         XCTAssert(item.sku.characters.count > 0, "missing sku");
         XCTAssert(item.quantity > 0, "missing quantity");
     }
@@ -287,7 +286,7 @@ class GTNTestModels: XCTestCase {
     // MARK:
     // MARK: Country
     
-    internal static func verifyCountry(country: GTNCountry){
+    internal static func verifyCountry(_ country: GTNCountry){
         XCTAssert(country.name.characters.count > 0, "missing country name");
         XCTAssert(country.code.characters.count > 0, "missing country code");
         XCTAssert(country.measurementCode.characters.count > 0, "missing measurement code");
@@ -295,14 +294,14 @@ class GTNTestModels: XCTestCase {
     }
     
     // MARK: Currency
-    internal static func verifyCurrency(curr: GTNCurrency){
+    internal static func verifyCurrency(_ curr: GTNCurrency){
         XCTAssert(curr.name.characters.count > 0, "missing currency name");
         XCTAssert(curr.code.characters.count > 0, "missing currency code");
         XCTAssert(curr.format.characters.count > 0, "missing currency format");
     }
     
     // MARK: User Info
-    internal static func verifyUserInfo(uInfo: GTNUserInfo){
+    internal static func verifyUserInfo(_ uInfo: GTNUserInfo){
         XCTAssert(uInfo.languageCode.characters.count > 0, "missing language code");
         XCTAssert(uInfo.countryCode.characters.count > 0, "missing country code");
         XCTAssert(uInfo.countryName.characters.count > 0, "missing country name");
@@ -312,12 +311,12 @@ class GTNTestModels: XCTestCase {
     }
     
     // MARK: Address validation
-    internal static func verifyAddressValidation(address: GTNAddressValidation){
+    internal static func verifyAddressValidation(_ address: GTNAddressValidation){
         XCTAssert(address.reason.characters.count > 0, "missing reason");
         XCTAssert(address.score > -999, "missing score");
     }
     
-    internal static func verifyProposedAddress(address: GTNProposedAddress){
+    internal static func verifyProposedAddress(_ address: GTNProposedAddress){
         XCTAssert(address.city.characters.count > 0, "missing city");
         XCTAssert(address.countryCode.characters.count > 0, "missing country code");
         XCTAssert(address.postalCode.characters.count > 0, "missing postal code");

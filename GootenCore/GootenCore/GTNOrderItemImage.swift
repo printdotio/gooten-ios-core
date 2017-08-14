@@ -8,12 +8,12 @@
 
 import Foundation
 
-public class GTNOrderItemImage: NSObject {
+open class GTNOrderItemImage: NSObject {
 
-    public var url: String = "";
-    public var index: Int = 0;
-    public var thumbnailUrl: String = "";
-    public var manipCommand: String = "";
+    open var url: String = "";
+    open var index: Int = 0;
+    open var thumbnailUrl: String = "";
+    open var manipCommand: String = "";
     
     public init(url: String, index: Int, thumbnailUrl: String, manipCommand: String) {
         super.init();

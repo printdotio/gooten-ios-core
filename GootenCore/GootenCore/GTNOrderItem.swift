@@ -8,13 +8,13 @@
 
 import Foundation
 
-public class GTNOrderItem: NSObject {
+open class GTNOrderItem: NSObject {
 
-    public var sku: String = ""
-    public var quantity: Int = 0
-    public var shipCarrierMethod: Int = 0
-    public var meta: Dictionary<String, String> = [:]
-    public var images: Array<GTNOrderItemImage> = []
+    open var sku: String = ""
+    open var quantity: Int = 0
+    open var shipCarrierMethod: Int = 0
+    open var meta: Dictionary<String, String> = [:]
+    open var images: Array<GTNOrderItemImage> = []
     
     public init(sku: String, quantity: Int, shipCarrierMethod: Int, images: [GTNOrderItemImage], meta: [String:String]) {
         super.init()
@@ -25,9 +25,9 @@ public class GTNOrderItem: NSObject {
         self.meta = meta
     }
     
-    func elements()->[String:AnyObject]{
+    func elements()->[String:Any]{
         // create images array
-        var imagesArr: [AnyObject] = [];
+        var imagesArr: [Any] = [];
         for image in images {
             imagesArr.append(image.elements());
         }

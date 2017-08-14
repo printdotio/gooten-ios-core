@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gooten. All rights reserved.
 //
 
-public class GTNCore : NSObject{
+open class GTNCore : NSObject{
     
     var restClient: GTNAPIClient;
     
@@ -14,150 +14,150 @@ public class GTNCore : NSObject{
         self.restClient = GTNAPIClient();
     }
     
-    public func setConfig(configuration: GTNConfig){
+    open func setConfig(_ configuration: GTNConfig){
         GTNConfig.sharedInstance.copy(from: configuration);
     }
     
-    public func config()->GTNConfig{
+    open func config()->GTNConfig{
         return GTNConfig.sharedInstance;
     }
     
     // MARK: Public functions
-    public func getUserLocation(success success:(countryCode: String)->(), failure:(error: GTNError)->()){
+    open func getUserLocation(success:@escaping (_ countryCode: String)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getUserLocation(success: { (countryCode) in
-            success(countryCode: countryCode);
+            success(countryCode);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func getProducts(success success:(products: Array<GTNProduct>)->(), failure:(error: GTNError)->()){
+    open func getProducts(success:@escaping (_ products: Array<GTNProduct>)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getProducts(success: { (products) in
-            success(products: products);
+            success(products);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func getProductVariants(productId productId: Int, success:(variants: Array<GTNProductVariant>)->(), failure:(error: GTNError)->()){
+    open func getProductVariants(productId: Int, success:@escaping (_ variants: Array<GTNProductVariant>)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getProductVariants(productId: productId, success: { (variants) in
-            success(variants: variants);
+            success(variants);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func getRequiredImages(sku sku: String, templateName: String, success: (sizes: Array<GTNSize>)->(), failure: (error: GTNError)->()){
+    open func getRequiredImages(sku: String, templateName: String, success:@escaping (_ sizes: Array<GTNSize>)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getRequiredImages(sku: sku, templateName: templateName, success: { (sizes) in
-            success(sizes: sizes);
+            success(sizes);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func getProductTemplates(sku sku: String, success:(templates: Array<GTNProductTemplate>)->(), failure:(error: GTNError)->()){
+    open func getProductTemplates(sku: String, success:@escaping (_ templates: Array<GTNProductTemplate>)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getProductTemplates(sku: sku, success: { (templates) in
-            success(templates: templates);
+            success(templates);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func getShippingOptions(postalCode postalCode: String, state: String, countryCode: String, items: Array<GTNShippingItem>, success:(options: Array<GTNShippingOption>)->(), failure:(error: GTNError)->()){
+    open func getShippingOptions(postalCode: String, state: String, countryCode: String, items: Array<GTNShippingItem>, success:@escaping (_ options: Array<GTNShippingOption>)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getShippingOptions(postalCode: postalCode, state: state, countryCode: countryCode, items: items, success: { (shippingPrices) in
-            success(options: shippingPrices);
+            success(shippingPrices);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func getShipPriceEstimate(productId productId: Int, success:(shipPriceEstimate: GTNShipPriceEstimate)->(), failure:(error: GTNError)->()){
+    open func getShipPriceEstimate(productId: Int, success:@escaping (_ shipPriceEstimate: GTNShipPriceEstimate)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getShipPriceEstimate(productId: productId, success: { (shipPriceEstimate) in
-            success(shipPriceEstimate: shipPriceEstimate);
+            success(shipPriceEstimate);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func getPaymentValidation(orderId orderId: String, paypalKey: String, success:(isValid: Bool)->(), failure:(error: GTNError)->()){
+    open func getPaymentValidation(orderId: String, paypalKey: String, success:@escaping (_ isValid: Bool)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getPaymentValidation(orderId: orderId, paypalKey: paypalKey, success: { (isValid) in
-            success(isValid: isValid);
+            success(isValid);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         }
     }
     
-    public func getOrderStatus(orderId orderId: String, success:(orderStatus: GTNOrderStatus)->(), failure:(error: GTNError)->()){
+    open func getOrderStatus(orderId: String, success:@escaping (_ orderStatus: GTNOrderStatus)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getOrderStatus(orderId: orderId, success: { (orderStatus) in
-            success(orderStatus: orderStatus);
+            success(orderStatus);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func orderSubmitApplePay(shippingAddress shippingAddress: GTNAddress, billingAddress: GTNAddress, pkPayment: PKPayment, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], success:(orderId: String)->(), failure:(error: GTNError)->()){
+    open func orderSubmitApplePay(shippingAddress: GTNAddress, billingAddress: GTNAddress, pkPayment: PKPayment, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], success:@escaping (_ orderId: String)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.orderSubmitApplePay(shippingAddress: shippingAddress, billingAddress: billingAddress, pkPayment: pkPayment, payment: payment, items: items, couponCodes: couponCodes, success: { (orderId) in
-            success(orderId: orderId);
+            success(orderId);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func orderSubmitBraintree(shippingAddress shippingAddress: GTNAddress, billingAddress: GTNAddress, payment: GTNPaymentBraintree, items: [GTNOrderItem], couponCodes: [String], success:(orderId: String)->(), failure: (error: GTNError)->()){
+    open func orderSubmitBraintree(shippingAddress: GTNAddress, billingAddress: GTNAddress, payment: GTNPaymentBraintree, items: [GTNOrderItem], couponCodes: [String], success:@escaping (_ orderId: String)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.orderSubmitBraintree(shippingAddress: shippingAddress, billingAddress: billingAddress, payment: payment, items: items, couponCodes: couponCodes, success: { (orderId) in
-            success(orderId: orderId);
+            success(orderId);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func orderSubmitPaypal(shippingAddress shippingAddress: GTNAddress, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], success:(orderId: String)->(), failure: (error: GTNError)->()){
+    open func orderSubmitPaypal(shippingAddress: GTNAddress, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], success:@escaping (_ orderId: String)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.orderSubmitPaypal(shippingAddress: shippingAddress, payment: payment, items: items, couponCodes: couponCodes, success: { (orderId) in
-            success(orderId: orderId);
+            success(orderId);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
     // MARK: Other
     
-    public func getCountries(success success:(countries: Array<GTNCountry>)->(), failure:(error: GTNError)->()) {
+    open func getCountries(success:@escaping (_ countries: Array<GTNCountry>)->(), failure:@escaping (_ error: GTNError)->()) {
         restClient.getCountries(success: { (countries) in
-            success(countries: countries);
+            success(countries);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func getCurrencies(success success:(currencies: Array<GTNCurrency>)->(), failure:(error: GTNError)->()){
+    open func getCurrencies(success:@escaping (_ currencies: Array<GTNCurrency>)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getCurrencies(success: { (currencies) in
-            success(currencies: currencies);
+            success(currencies);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public func getUserInfo(success success:(userInfo: GTNUserInfo)->(), failure:(error: GTNError)->()){
+    open func getUserInfo(success:@escaping (_ userInfo: GTNUserInfo)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.getUserInfo(success: { (userInfo) in
-            success(userInfo: userInfo);
+            success(userInfo);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    public  func convertCurrency(fromCurrencyCode fromCurrencyCode: String, toCurrencyCode: String, amount: Double, success:(result: GTNPriceInfo)->(), failure:(error: GTNError)->()) {
+    open  func convertCurrency(fromCurrencyCode: String, toCurrencyCode: String, amount: Double, success:@escaping (_ result: GTNPriceInfo)->(), failure:@escaping (_ error: GTNError)->()) {
         restClient.convertCurrency(fromCurrencyCode: fromCurrencyCode, toCurrencyCode: toCurrencyCode, amount: amount, success: { (result) in
-            success(result: result);
+            success(result);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         }
     }
     
-    public func validateAddress(address: GTNAddress, success:(result: GTNAddressValidation)->(), failure:(error: GTNError)->()){
+    open func validateAddress(_ address: GTNAddress, success:@escaping (_ result: GTNAddressValidation)->(), failure:@escaping (_ error: GTNError)->()){
         restClient.validateAddress(address, success: { (result) in
-            success(result: result);
+            success(result);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
 }

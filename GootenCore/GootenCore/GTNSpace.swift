@@ -8,22 +8,22 @@
 
 import Foundation
 
-public class GTNSpace: NSObject{
+open class GTNSpace: NSObject{
     
-    public var id: String = "";
-    public var index: Int = -1;
-    public var finalX1: Int = 0;
-    public var finalX2: Int = 0;
-    public var finalY1: Int = 0;
-    public var finalY2: Int = 0;
-    public var layers: Array<GTNLayer> = [];
+    open var id: String = "";
+    open var index: Int = -1;
+    open var finalX1: Int = 0;
+    open var finalX2: Int = 0;
+    open var finalY1: Int = 0;
+    open var finalY2: Int = 0;
+    open var layers: Array<GTNLayer> = [];
     
     init(_ jsonObj: AnyObject) {
         super.init();
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject){
+    func parseJson(_ jsonObj: AnyObject){
         if let idS = jsonObj["Id"] as? String { self.id = idS; }
         if let indexS = jsonObj["Index"] as? Int { self.index = indexS; }
         if let finalX1S = jsonObj["FinalX1"] as? Int { self.finalX1 = finalX1S; }

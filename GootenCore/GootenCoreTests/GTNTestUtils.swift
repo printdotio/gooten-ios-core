@@ -33,7 +33,7 @@ class GTNTestUtils: XCTestCase {
         config.isInTestMode = false;
         config.recipeId = "87687607858747637";
         config.turnOffLogs = true;
-        config.environment = .Staging;
+        config.environment = .staging;
         config.countryCode = "ertg";
         config.languageCode = "sdfhl";
         config.currencyCode = "938479";

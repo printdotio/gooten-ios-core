@@ -8,18 +8,18 @@
 
 import Foundation
 
-public class GTNAddress: NSObject{
+open class GTNAddress: NSObject{
 
-    public var firstName: String = "";
-    public var lastName: String = "";
-    public var line1: String = "";
-    public var line2: String = "";
-    public var city: String = "";
-    public var state: String = "";
-    public var countryCode: String = "";
-    public var postalCode: String = "";
-    public var phone: String = "";
-    public var email: String = "";
+    open var firstName: String = "";
+    open var lastName: String = "";
+    open var line1: String = "";
+    open var line2: String = "";
+    open var city: String = "";
+    open var state: String = "";
+    open var countryCode: String = "";
+    open var postalCode: String = "";
+    open var phone: String = "";
+    open var email: String = "";
     
     public override init() {
         super.init();
@@ -44,7 +44,7 @@ public class GTNAddress: NSObject{
         self.email = email;
     }
     
-    func parseJson(jsonObj: AnyObject){
+    func parseJson(_ jsonObj: AnyObject){
         if let firstNameS = jsonObj["FirstName"] as? String { self.firstName = firstNameS };
         if let lastNameS = jsonObj["LastName"] as? String { self.lastName = lastNameS };
         if let line1S = jsonObj["Line1"] as? String { self.line1 = line1S };

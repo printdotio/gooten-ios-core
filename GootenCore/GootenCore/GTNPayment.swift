@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class GTNPayment: NSObject {
+open class GTNPayment: NSObject {
     
-    public var currencyCode: String = "";
-    public var total: Double = 0.0;
+    open var currencyCode: String = "";
+    open var total: Double = 0.0;
     
     public init(currencyCode: String, total: Double) {
         super.init();

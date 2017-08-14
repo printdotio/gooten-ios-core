@@ -34,11 +34,11 @@ let kGTNRESTAPIPathAddressValidation = "addressvalidation/?";
 
 func serverURL() -> String {
     switch GTNConfig.sharedInstance.environment {
-    case .Staging:
+    case .staging:
         return kGTNServerURLStaging;
-    case .Production:
+    case .production:
         return kGTNServerURLProduction;
-    case .QA:
+    case .qa:
         return kGTNServerURLQA;
     }
 }
@@ -46,23 +46,23 @@ func serverURL() -> String {
 class GTNAPIClient {
     
     // MARK: Endpoint calls
-    func getUserLocation(success success:(countryCode: String)->(), failure:(error: GTNError)->()) {
-        execute(kGTNRESTAPIServerUserLocation, path: kGTNRESTAPIPathUserLocation, serializer: .RawData, useRecipeId: false, success: { (responseObj) in
-            var resultS = String(data: responseObj as! NSData, encoding: NSUTF8StringEncoding)!;
+    func getUserLocation(success:@escaping (_ countryCode: String)->(), failure:@escaping (_ error: GTNError)->()) {
+        execute(kGTNRESTAPIServerUserLocation, path: kGTNRESTAPIPathUserLocation, serializer: .rawData, useRecipeId: false, success: { (responseObj) in
+            var resultS = String(data: responseObj as! Data, encoding: String.Encoding.utf8)!;
             resultS = gtnUtilsReplace(resultS, pattern: "[^a-zA-Z0-9]", replacementPattern: "")!;
-            success(countryCode: resultS);
+            success(resultS);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func getProducts(success success:(products: Array<GTNProduct>)->(), failure:(error: GTNError)->()){
+    func getProducts(success:@escaping (_ products: Array<GTNProduct>)->(), failure:@escaping (_ error: GTNError)->()){
         let params = basicParams(true);
         
         execute(path: kGTNRESTAPIPathProducts, params: params, success: { (responseObj) in
             guard let products = responseObj["Products"] as? [AnyObject]
                 else {
-                    failure(error: GTNError(.ParseJSONFailed));
+                    failure(GTNError(.parseJSONFailed));
                     return;
             }
             
@@ -71,21 +71,21 @@ class GTNAPIClient {
                 let product = GTNProduct(productJson);
                 productsArr.append(product);
             }
-            success(products: productsArr);
+            success(productsArr);
             
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func getProductVariants(productId productId: Int, success: (variants: Array<GTNProductVariant>)->(), failure: (error: GTNError)->()){
+    func getProductVariants(productId: Int, success:@escaping (_ variants: Array<GTNProductVariant>)->(), failure:@escaping (_ error: GTNError)->()){
         var params = basicParams(true);
         params["productId"] = String(productId);
         
         execute(path: kGTNRESTAPIPathVariants, params: params, success: { (responseObj) in
             guard let variants = responseObj["ProductVariants"] as? [AnyObject]
                 else {
-                    failure(error: GTNError(.ParseJSONFailed));
+                    failure(GTNError(.parseJSONFailed));
                     return;
             }
             
@@ -94,21 +94,21 @@ class GTNAPIClient {
                 let variant = GTNProductVariant(variantJson);
                 variantsArr.append(variant);
             }
-            success(variants: variantsArr);
+            success(variantsArr);
             
         }) { (error) in
-            failure(error: error);
+            failure(error);
         }
     }
     
-    func getProductTemplates(sku sku: String, success: (templates: Array<GTNProductTemplate>)->(), failure: (error: GTNError)->()){
+    func getProductTemplates(sku: String, success:@escaping (_ templates: Array<GTNProductTemplate>)->(), failure:@escaping (_ error: GTNError)->()){
         var params = basicParams(true);
         params["sku"] = sku;
         
         execute(path: kGTNRESTAPIPathTemplates, params: params, success: { (responseObj) in
             guard let templates = responseObj["Options"] as? [AnyObject]
                 else {
-                    failure(error: GTNError(.ParseJSONFailed));
+                    failure(GTNError(.parseJSONFailed));
                     return;
             }
             
@@ -117,13 +117,13 @@ class GTNAPIClient {
                 let template = GTNProductTemplate(templateJson);
                 templatesArr.append(template);
             }
-            success(templates: templatesArr);
+            success(templatesArr);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func getRequiredImages(sku sku: String, templateName: String, success: (sizes: Array<GTNSize>)->(), failure: (error: GTNError)->()){
+    func getRequiredImages(sku: String, templateName: String, success:@escaping (_ sizes: Array<GTNSize>)->(), failure:@escaping (_ error: GTNError)->()){
         getProductTemplates(sku: sku, success: { (templates) in
             
             var template: GTNProductTemplate = GTNProductTemplate();
@@ -136,7 +136,7 @@ class GTNAPIClient {
             }
             
             if template.spaces.count == 0 {
-                failure(error: GTNError(.InvalidTemplate));
+                failure(GTNError(.invalidTemplate));
                 return;
             }
             
@@ -150,17 +150,17 @@ class GTNAPIClient {
                 }
             }
             
-            success(sizes: sizesArr);
+            success(sizesArr);
             
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func getShippingOptions(postalCode postalCode: String, state: String, countryCode: String, items: Array<GTNShippingItem>, success:(options: Array<GTNShippingOption>)->(), failure:(error: GTNError)->()){
+    func getShippingOptions(postalCode: String, state: String, countryCode: String, items: Array<GTNShippingItem>, success:@escaping(_ options: Array<GTNShippingOption>)->(), failure:@escaping (_ error: GTNError)->()){
         
         if items.count == 0 {
-            failure(error: GTNError(.NoItems));
+            failure(GTNError(.noItems));
             return;
         }
         
@@ -170,7 +170,7 @@ class GTNAPIClient {
             itemsArr.append(item.dict());
         }
         
-        let params : [String : AnyObject] = ["ShipToPostalCode" : postalCode,
+        let params : [String : Any] = ["ShipToPostalCode" : postalCode,
                                              "ShipToCountry" : countryCode,
                                              "ShipToState" : state,
                                              "LanguageCode" : GTNConfig.sharedInstance.languageCode,
@@ -178,13 +178,13 @@ class GTNAPIClient {
                                              "Items" : itemsArr];
         
         do {
-            let jsonData = try NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions.PrettyPrinted)
+            let jsonData = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
             
-            if let jsonString = String(data: jsonData, encoding: NSUTF8StringEncoding){
+            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
                 execute(path: kGTNRESTAPIPathShippingPrices, method: kGTHttpMethodPOST, rawData: jsonString, success: { (responseObj) in
                     guard let resultsArr = responseObj["Result"] as? Array<AnyObject>
                         else {
-                            failure(error: GTNError(.ParseJSONFailed));
+                            failure(GTNError(.parseJSONFailed));
                             return;
                     }
                     
@@ -192,66 +192,66 @@ class GTNAPIClient {
                     for item in resultsArr {
                         shippingOptionsArr.append((GTNShippingOption(item)));
                     }
-                    success(options: shippingOptionsArr);
+                    success(shippingOptionsArr);
                     
                     }, failure: { (error) in
-                        failure(error: error);
+                        failure(error);
                 });
             }
         } catch {
-            failure(error: GTNError(.ParseJSONFailed));
+            failure(GTNError(.parseJSONFailed));
         }
     }
     
-    func getShipPriceEstimate(productId productId: Int, success:(shipPriceEstimate: GTNShipPriceEstimate)->(), failure:(error: GTNError)->()){
+    func getShipPriceEstimate(productId: Int, success:@escaping (_ shipPriceEstimate: GTNShipPriceEstimate)->(), failure:@escaping (_ error: GTNError)->()){
         var params = basicParams();
         params["productId"] = String(productId);
         
         execute(path: kGTNRESTAPIPathShipPriceEstimate, params: params, success: { (responseObj) in
-            success(shipPriceEstimate: GTNShipPriceEstimate(responseObj));
+            success(GTNShipPriceEstimate(responseObj));
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func getOrderStatus(orderId orderId: String, success:(orderStatus: GTNOrderStatus)->(), failure:(error: GTNError)->()){
+    func getOrderStatus(orderId: String, success:@escaping (_ orderStatus: GTNOrderStatus)->(), failure:@escaping (_ error: GTNError)->()){
         var params = basicParams();
         params["id"] = orderId;
         
         execute(path: kGTNRESTAPIPathOrders, params: params, success: { (responseObj) in
-            success(orderStatus: GTNOrderStatus(responseObj));
+            success(GTNOrderStatus(responseObj));
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func getPaymentValidation(orderId orderId: String, paypalKey: String, success:(isValid: Bool)->(), failure:(error: GTNError)->()){
+    func getPaymentValidation(orderId: String, paypalKey: String, success:@escaping (_ isValid: Bool)->(), failure:@escaping (_ error: GTNError)->()){
         var params = basicParams();
         params["OrderId"] = orderId;
         params["PayPalKey"] = paypalKey;
         
         execute(path: kGTNRESTAPIPathPaymentValidation, params: params, success: { (responseObj) in
             if let isValidResult = responseObj["IsValid"] as? Bool{
-                success(isValid: isValidResult);
+                success(isValidResult);
             } else {
-                success(isValid: false);
+                success(false);
             }
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
     // apple pay
-    func getBraintreeClientToken(success success:(token: String)->(), failure:(error: GTNError)->()){
+    func getBraintreeClientToken(success:@escaping (_ token: String)->(), failure:@escaping (_ error: GTNError)->()){
         execute(path: kGTNRESTAPIPathBraintreeClientToken, success: { (responseObj) in
             guard let tokenS = responseObj as? String else { return; }
-            success(token: tokenS);
+            success(tokenS);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func orderSubmitApplePay(shippingAddress shippingAddress: GTNAddress, billingAddress: GTNAddress, pkPayment: PKPayment, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], success:(orderId: String)->(), failure:(error: GTNError)->()){
+    func orderSubmitApplePay(shippingAddress: GTNAddress, billingAddress: GTNAddress, pkPayment: PKPayment, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], success:@escaping (_ orderId: String)->(), failure:@escaping (_ error: GTNError)->()){
         
         // first get braintree toket from our server
         self.getBraintreeClientToken(success: { (token) in
@@ -260,52 +260,52 @@ class GTNAPIClient {
             }
             
             let braintree = Braintree(clientToken: token);
-            braintree.tokenizeApplePayPayment(pkPayment, completion: { (nonce, error) in
+            braintree?.tokenizeApplePay(pkPayment, completion: { (nonce, error) in
                 
                 if error != nil {
-                    failure(error: GTNError(.Custom, message: error.description));
+                    failure(GTNError(.custom, message: error.debugDescription));
                     return;
                 }
                 
-                self.orderSubmit(shippingAddress, billingAddress: billingAddress, payment: payment, items: items, couponCodes: couponCodes, isPreSubmit: false, nonce: nonce,  success: { (orderId) in
-                    success(orderId: orderId);
+                self.orderSubmit(shippingAddress, billingAddress: billingAddress, payment: payment, items: items, couponCodes: couponCodes, isPreSubmit: false, nonce: nonce!,  success: { (orderId) in
+                    success(orderId);
                 }) { (error) in
-                    failure(error: error);
+                    failure(error);
                 };
             });
             
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
     // paypal
-    func orderSubmitPaypal(shippingAddress shippingAddress: GTNAddress, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], success:(orderId: String)->(), failure: (error: GTNError)->()){
+    func orderSubmitPaypal(shippingAddress: GTNAddress, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], success:@escaping (_ orderId: String)->(), failure:@escaping (_ error: GTNError)->()){
         
         self.orderSubmit(shippingAddress, billingAddress: GTNAddress(), payment: payment, items: items, couponCodes: couponCodes, isPreSubmit: true, nonce: "", success: { (orderId) in
-            success(orderId: orderId);
+            success(orderId);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
     // credit card - braintree
-    func orderSubmitBraintree(shippingAddress shippingAddress: GTNAddress, billingAddress: GTNAddress, payment: GTNPaymentBraintree, items: [GTNOrderItem], couponCodes: [String], success:(orderId: String)->(), failure: (error: GTNError)->()){
+    func orderSubmitBraintree(shippingAddress: GTNAddress, billingAddress: GTNAddress, payment: GTNPaymentBraintree, items: [GTNOrderItem], couponCodes: [String], success:@escaping (_ orderId: String)->(), failure:@escaping (_ error: GTNError)->()){
         
         self.orderSubmit(shippingAddress, billingAddress: billingAddress, payment: payment, items: items, couponCodes: couponCodes, isPreSubmit: false, nonce: "", success: { (orderId) in
-            success(orderId: orderId);
+            success(orderId);
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
     // main submit order function
-    func orderSubmit(shippingAddress: GTNAddress, billingAddress: GTNAddress, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], isPreSubmit: Bool, nonce: String, success:(orderId: String)->(), failure: (error: GTNError)->()){
+    func orderSubmit(_ shippingAddress: GTNAddress, billingAddress: GTNAddress, payment: GTNPayment, items: [GTNOrderItem], couponCodes: [String], isPreSubmit: Bool, nonce: String, success:@escaping (_ orderId: String)->(), failure:@escaping (_ error: GTNError)->()){
         
         // create items array
         var itemsArr:[AnyObject] = [];
         for orderItem in items {
-            itemsArr.append(orderItem.elements());
+            itemsArr.append(orderItem.elements() as AnyObject);
         }
         
         var jsonDict: Dictionary = ["ShipToAddress" :  shippingAddress.elements(),
@@ -314,11 +314,11 @@ class GTNAPIClient {
                                     "Payment" : payment.elements(),
                                     "CouponCodes" : couponCodes,
                                     "Meta" : ["Source" : "ios-core", "Version" : GTNDefaults.SDKVersion],
-                                    "isInTestMode" : (GTNConfig.sharedInstance.isInTestMode ? "true" : "false")];
+                                    "isInTestMode" : (GTNConfig.sharedInstance.isInTestMode ? "true" : "false")] as [String : Any];
         
         // paypal settings
         if isPreSubmit {
-            jsonDict.removeValueForKey("BillingAddress");
+            jsonDict.removeValue(forKey: "BillingAddress");
             jsonDict["IsPreSubmit"] = "true";
         }
         
@@ -330,9 +330,9 @@ class GTNAPIClient {
         }
         
         do {
-            let jsonData = try NSJSONSerialization.dataWithJSONObject(jsonDict, options: NSJSONWritingOptions.PrettyPrinted)
+            let jsonData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)
             
-            if let jsonString = String(data: jsonData, encoding: NSUTF8StringEncoding){
+            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
                 execute(path: kGTNRESTAPIPathOrders, method: kGTHttpMethodPOST, rawData: jsonString, success: { (responseObj) in
                     
                     // parse error if exist
@@ -352,36 +352,36 @@ class GTNAPIClient {
                                 }
                             }
                             
-                            failure(error: GTNError(.Custom, message: errorMessage));
+                            failure(GTNError(.custom, message: errorMessage));
                             return;
                         }
                     }
                     
                     if let orderId = responseObj["Id"] as? String {
-                        success(orderId: orderId);
+                        success(orderId);
                         return;
                     }
                     
-                    failure(error: GTNError(.ParseJSONFailed));
+                    failure(GTNError(.parseJSONFailed));
                     
                 }) { (error) in
-                    failure(error: error);
+                    failure(error);
                 };
             }
         } catch {
-            failure(error: GTNError(.ParseJSONFailed));
+            failure(GTNError(.parseJSONFailed));
         }
     }
     
     // MARK: Other, less important endopoints
     
-    func getCountries(success success:(countries: Array<GTNCountry>)->(), failure:(error: GTNError)->()) {
+    func getCountries(success:@escaping (_ countries: Array<GTNCountry>)->(), failure:@escaping (_ error: GTNError)->()) {
         let params = basicParams();
         
         execute(path: kGTNRESTAPIPathCountries, params: params, success: { (responseObj) in
             guard let countriesArr = responseObj["Countries"] as? Array<AnyObject>
                 else {
-                    failure(error: GTNError(.ParseJSONFailed));
+                    failure(GTNError(.parseJSONFailed));
                     return;
             }
             
@@ -391,20 +391,20 @@ class GTNAPIClient {
                 countries.append(GTNCountry(country));
             }
             
-            success(countries: countries);
+            success(countries);
             
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func getCurrencies(success success:(currencies: Array<GTNCurrency>)->(), failure:(error: GTNError)->()){
+    func getCurrencies(success:@escaping (_ currencies: Array<GTNCurrency>)->(), failure:@escaping (_ error: GTNError)->()){
         let params = basicParams();
         
         execute(path: kGTNRESTAPIPathCurrencies, params: params, success: { (responseObj) in
             guard let currenciesArr = responseObj["Currencies"] as? Array<AnyObject>
                 else {
-                    failure(error: GTNError(.ParseJSONFailed));
+                    failure(GTNError(.parseJSONFailed));
                     return;
             }
             
@@ -414,47 +414,47 @@ class GTNAPIClient {
                 currencies.append(GTNCurrency(country));
             }
             
-            success(currencies: currencies);
+            success(currencies);
             
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func getUserInfo(success success:(userInfo: GTNUserInfo)->(), failure:(error: GTNError)->()){
+    func getUserInfo(success:@escaping (_ userInfo: GTNUserInfo)->(), failure:@escaping (_ error: GTNError)->()){
         let params = basicParams();
         
         execute(path: kGTNRESTAPIPathUserInfo, params: params, success: { (responseObj) in
-            success(userInfo: GTNUserInfo(responseObj));
+            success(GTNUserInfo(responseObj));
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func convertCurrency(fromCurrencyCode fromCurrencyCode: String, toCurrencyCode: String, amount: Double, success:(result: GTNPriceInfo)->(), failure:(error: GTNError)->()) {
+    func convertCurrency(fromCurrencyCode: String, toCurrencyCode: String, amount: Double, success:@escaping (_ result: GTNPriceInfo)->(), failure:@escaping (_ error: GTNError)->()) {
         
         let params = ["fromCurrencyCode" : fromCurrencyCode, "toCurrencyCode" : toCurrencyCode, "amount" : String(amount)];
         
         execute(path: kGTNRESTAPIPathCurrencyConversion, params: params, success: { (responseObj) in
-            success(result: GTNPriceInfo(responseObj));
+            success(GTNPriceInfo(responseObj));
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
-    func validateAddress(address: GTNAddress, success:(result: GTNAddressValidation)->(), failure:(error: GTNError)->()){
+    func validateAddress(_ address: GTNAddress, success:@escaping (_ result: GTNAddressValidation)->(), failure:@escaping (_ error: GTNError)->()){
         
         let params = ["line1" : address.line1, "line2" : address.line2, "city" : address.city, "state" : address.state, "postalCode" : address.postalCode, "countryCode" : address.countryCode];
         
         execute(path: kGTNRESTAPIPathAddressValidation, params: params, success: { (responseObj) in
-            success(result: GTNAddressValidation(responseObj));
+            success(GTNAddressValidation(responseObj));
         }) { (error) in
-            failure(error: error);
+            failure(error);
         };
     }
     
     // MARK: Utils
-    func basicParams(addShowAllProducts: Bool = false)->[String: String]{
+    func basicParams(_ addShowAllProducts: Bool = false)->[String: String]{
         var params = ["countryCode" : GTNConfig.sharedInstance.countryCode,
                       "languageCode" : GTNConfig.sharedInstance.languageCode,
                       "currencyCode" : GTNConfig.sharedInstance.currencyCode];
@@ -465,13 +465,13 @@ class GTNAPIClient {
     }
     
     // MARK: Execute calls
-    func execute(baseUrl: String = serverURL(), path: String, method: String = kGTHttpMethodGET, serializer: GTNSerializer = .JSON, params: [String:String] = [:], rawData: String = "", useRecipeId: Bool = true, success:(responseObj: AnyObject) -> (), failure:(error: GTNError) -> ()){
+    func execute(_ baseUrl: String = serverURL(), path: String, method: String = kGTHttpMethodGET, serializer: GTNSerializer = .json, params: [String:String] = [:], rawData: String = "", useRecipeId: Bool = true, success:@escaping (_ responseObj: AnyObject) -> (), failure:@escaping (_ error: GTNError) -> ()){
         
-        guard let baseURL = NSURL(string: baseUrl) else {return;}
+        guard let baseURL = URL(string: baseUrl) else {return;}
         
         // validate GTNConfig
         if !GTNConfig.sharedInstance.isValid(){
-            failure(error: GTNError(GTNErrorCode.InvalidConfiguration));
+            failure(GTNError(GTNErrorCode.invalidConfiguration));
             return;
         }
         
@@ -487,25 +487,25 @@ class GTNAPIClient {
         if method == kGTHttpMethodPOST {
             var anyParams: AnyObject;
             if !rawData.isEmpty {
-                anyParams = rawData.dataUsingEncoding(NSUTF8StringEncoding)!;
+                anyParams = rawData.data(using: String.Encoding.utf8)! as AnyObject;
             } else {
-                anyParams = params;
+                anyParams = params as AnyObject;
             }
             
             urlConnection.postToPath(endpoint, parameters: anyParams, success: { (response) in
                 printgt("GTNAPIClient response: \(response)");
-                success(responseObj: response);
+                success(response);
                 }, failure: { (error) in
-                    failure(error: error);
+                    failure(error);
             });
         }
         
         if method == kGTHttpMethodGET {
             urlConnection.getFromPath(endpoint, parameters: params, success: { (response) in
                 printgt("GTNAPIClient response: \(response)");
-                success(responseObj: response);
+                success(response);
                 }, failure: { (error) in
-                    failure(error: error);
+                    failure(error);
             });
         }
     }

@@ -8,19 +8,19 @@
 
 import Foundation
 
-public class GTNProductImage: NSObject{
+open class GTNProductImage: NSObject{
     
-    public var url: String = "";
-    public var index: Int = 0;
-    public var id: Int = 0;
-    public var types: Array<String> = [];
+    open var url: String = "";
+    open var index: Int = 0;
+    open var id: Int = 0;
+    open var types: Array<String> = [];
     
     init(_ jsonObj: AnyObject) {
         super.init();
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject) {
+    func parseJson(_ jsonObj: AnyObject) {
         if let urlS = jsonObj["Url"] as? String { self.url = urlS; }
         if let indexS = jsonObj["Index"] as? Int { self.index = indexS; }
         

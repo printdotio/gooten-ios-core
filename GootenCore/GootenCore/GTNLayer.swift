@@ -8,32 +8,32 @@
 
 import Foundation
 
-public class GTNLayer: NSObject{
+open class GTNLayer: NSObject{
     
-    public var id: String = "";
-    public var type: String = "";
-    public var zIndex: Int = -1;
-    public var X1: Int = 0;
-    public var X2: Int = 0;
-    public var Y1: Int = 0;
-    public var Y2: Int = 0;
-    public var backgroundImageUrl: String = "";
-    public var overlayImageUrl: String = "";
-    public var includeInPrint: Bool = false;
-    public var imageFill: String = "";
-    public var color: String = "";
-    public var fontName: String = "";
-    public var fontSize: Double = 0.0;
-    public var horizontalAlignment: String = "";
-    public var verticalAlignment: String = "";
-    public var defaultText: String = "";
+    open var id: String = "";
+    open var type: String = "";
+    open var zIndex: Int = -1;
+    open var X1: Int = 0;
+    open var X2: Int = 0;
+    open var Y1: Int = 0;
+    open var Y2: Int = 0;
+    open var backgroundImageUrl: String = "";
+    open var overlayImageUrl: String = "";
+    open var includeInPrint: Bool = false;
+    open var imageFill: String = "";
+    open var color: String = "";
+    open var fontName: String = "";
+    open var fontSize: Double = 0.0;
+    open var horizontalAlignment: String = "";
+    open var verticalAlignment: String = "";
+    open var defaultText: String = "";
     
     init(_ jsonObj: AnyObject) {
         super.init();
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject) {
+    func parseJson(_ jsonObj: AnyObject) {
         if let idS = jsonObj["Id"] as? String { self.id = idS; }
         if let typeS = jsonObj["Type"] as? String { self.type = typeS; }
         if let zIndexS = jsonObj["ZIndex"] as? Int { self.zIndex = zIndexS; }

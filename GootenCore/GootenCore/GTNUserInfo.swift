@@ -8,21 +8,21 @@
 
 import Foundation
 
-public class GTNUserInfo: NSObject{
+open class GTNUserInfo: NSObject{
     
-    public var languageCode: String = "";
-    public var countryCode: String = "";
-    public var countryName: String = "";
-    public var currencyFormat: String = "";
-    public var currencyCode: String = "";
-    public var currencyName: String = "";
+    open var languageCode: String = "";
+    open var countryCode: String = "";
+    open var countryName: String = "";
+    open var currencyFormat: String = "";
+    open var currencyCode: String = "";
+    open var currencyName: String = "";
     
     init(_ jsonObj: AnyObject) {
         super.init();
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject){
+    func parseJson(_ jsonObj: AnyObject){
         if let languageCodeS = jsonObj["LanguageCode"] as? String { self.languageCode = languageCodeS; }
         if let countryCodeS = jsonObj["CountryCode"] as? String { self.countryCode = countryCodeS; }
         if let countryNameS = jsonObj["CountryName"] as? String { self.countryName = countryNameS; }

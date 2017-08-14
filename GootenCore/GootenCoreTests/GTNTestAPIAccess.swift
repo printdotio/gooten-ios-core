@@ -18,7 +18,7 @@ class GTNTestAPIAccess: XCTestCase {
     
     let braintreeEncryptedCCVRaw = "$bt3|ios_2_0_0$InS/s77PLxuYQbp4eie5klpsXn6Ims8caT7RodaKG87Ho1cPHoYoNj28Ci1YSJM3Q0I3yLEF1EhAamS5QW5MLVxkCQNcskjYKl6ZmbRIoYO26B09iLcSbGoDIhGnZpsN1O36BgJECXi70Gp1+IqpTj0ce3q6pJ/yzgWsEQ82DvhTbMoDL8f6/Mk1vut1CZuDCyOp1LUVXnSJgJGWD7XanuD3GA73olWHVSbPzgeN9lHNKkH1VPdJIa3BQBICOoftcsx0a2VSNaZ3gy39h6W1qkz+RvTMtlSw3hlrn9Jv/jWr2WOnuuuCqGxfgVmkjCZCNEBtj8HtoSOj9N983+lj2g==$ERc5nw/zZ8EQFefZ5X8AAB5h9Em8D9V8JbKOz84HLzI=";
     
-    var urlConnection = GTNURLConnection(URL: NSURL(string: serverURL())!);
+    var urlConnection = GTNURLConnection(URL: URL(string: serverURL())!);
     
     override func setUp() {
         super.setUp()
@@ -31,7 +31,7 @@ class GTNTestAPIAccess: XCTestCase {
     }
     
     func testMissingRecipeId() {
-        let expectation = expectationWithDescription("wait to get result of missing recipe id");
+        let expectation = self.expectation(description: "wait to get result of missing recipe id");
         
         let core = GTNCore()
         core.setConfig(GTNConfig());
@@ -45,11 +45,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(10.0, handler: nil);
+        waitForExpectations(timeout: 10.0, handler: nil);
     }
     
     func testGetLocation(){
-        let expectation = expectationWithDescription("wait to get user location");
+        let expectation = self.expectation(description: "wait to get user location");
         
         let core = GTNCore()
         core.getUserLocation(success: {(countryCode) in
@@ -59,12 +59,12 @@ class GTNTestAPIAccess: XCTestCase {
             XCTAssert(error.message().characters.count == 0, "shouldn't be an error")
         };
         
-        waitForExpectationsWithTimeout(10.0, handler: nil);
+        waitForExpectations(timeout: 10.0, handler: nil);
     }
     
     func testGetProductsWORecipeId(){
         // test without setting recipe id in GTNConfig
-        let expectation = expectationWithDescription("wait to get products2");
+        let expectation = self.expectation(description: "wait to get products2");
         
         let core = GTNCore()
         core.setConfig(GTNConfig());
@@ -77,11 +77,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(10.0, handler: nil);
+        waitForExpectations(timeout: 10.0, handler: nil);
     }
     
     func testGetProducts(){
-        let expectation = expectationWithDescription("wait to get products1");
+        let expectation = self.expectation(description: "wait to get products1");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -96,11 +96,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(10.0, handler: nil);
+        waitForExpectations(timeout: 10.0, handler: nil);
     }
     
     func testGetProductVariants(){
-        let expectation = expectationWithDescription("wait to get product variants");
+        let expectation = self.expectation(description: "wait to get product variants");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -123,11 +123,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testGetProductTemplates(){
-        let expectation = expectationWithDescription("wait to get product variants");
+        let expectation = self.expectation(description: "wait to get product variants");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -156,11 +156,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testGetRequiredImages(){
-        let expectation = expectationWithDescription("wait to get required images");
+        let expectation = self.expectation(description: "wait to get required images");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -176,11 +176,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testGetShipPriceEstimate(){
-        let expectation = expectationWithDescription("wait to get ship price estimate");
+        let expectation = self.expectation(description: "wait to get ship price estimate");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -195,11 +195,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testGetShippingPrices(){
-        let expectation = expectationWithDescription("wait to get shipping prices");
+        let expectation = self.expectation(description: "wait to get shipping prices");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -226,11 +226,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testGetPaymentValidation(){
-        let expectation = expectationWithDescription("wait to get payment validation");
+        let expectation = self.expectation(description: "wait to get payment validation");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -245,13 +245,13 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         }
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testOrderStatus(){
         let orderId = "13-b399e5dd-b3da-4807-abf3-56be87909c61" // it could be changed in the future !!!
         
-        let expectation = expectationWithDescription("wait to get payment validation");
+        let expectation = self.expectation(description: "wait to get payment validation");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -289,11 +289,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         }
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testOrderSubmitViaBraintree(){
-        let expectation = expectationWithDescription("wait to submit an order via braintree");
+        let expectation = self.expectation(description: "wait to submit an order via braintree");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -328,11 +328,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(30.0, handler: nil);
+        waitForExpectations(timeout: 30.0, handler: nil);
     }
     
     func testOrderSubmitViaBraintreeMissingShippingAddress(){
-        let expectation = expectationWithDescription("wait to submit an order via braintree");
+        let expectation = self.expectation(description: "wait to submit an order via braintree");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -366,11 +366,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(30.0, handler: nil);
+        waitForExpectations(timeout: 30.0, handler: nil);
     }
     
     func testOrderSubmitViaBraintreeMissingBillingAddress(){
-        let expectation = expectationWithDescription("wait to submit an order via braintree");
+        let expectation = self.expectation(description: "wait to submit an order via braintree");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -403,11 +403,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(30.0, handler: nil);
+        waitForExpectations(timeout: 30.0, handler: nil);
     }
     
     func testOrderSubmitViaBraintreeMissingPayment(){
-        let expectation = expectationWithDescription("wait to submit an order via braintree");
+        let expectation = self.expectation(description: "wait to submit an order via braintree");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -440,12 +440,12 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(30.0, handler: nil);
+        waitForExpectations(timeout: 30.0, handler: nil);
     }
     
     
     func testOrderSubmitViaBraintreeMissingCurrencyCode(){
-        let expectation = expectationWithDescription("wait to submit an order via braintree");
+        let expectation = self.expectation(description: "wait to submit an order via braintree");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -478,12 +478,12 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(30.0, handler: nil);
+        waitForExpectations(timeout: 30.0, handler: nil);
     }
 
     
     func testOrderSubmitViaPaypal(){
-        let expectation = expectationWithDescription("wait to submit an order via paypal");
+        let expectation = self.expectation(description: "wait to submit an order via paypal");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -516,16 +516,16 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(30.0, handler: nil);
+        waitForExpectations(timeout: 30.0, handler: nil);
     }
     
     func testOrderSubmitApplePay(){
-        let expectation = expectationWithDescription("wait to submit order via ApplePay");
+        let expectation = self.expectation(description: "wait to submit order via ApplePay");
         
         let core = GTNCore()
         let config = GTNConfig();
         config.recipeId = "00000000-0000-0000-0000-000000000000";
-        config.environment = GTNEnvironment.Staging;
+        config.environment = GTNEnvironment.staging;
         core.setConfig(config);
         
         let shippingAddress = GTNAddress(firstName: "Lepa", lastName: "Brena", line1: "641 Highland Ave", line2: "", city: "Los Angeles", state: "CA", countryCode: "US", postalCode: "90036", phone: "1234", email: "kiki@nini.com");
@@ -558,13 +558,13 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     // MARK:
     
     func testGetCountries(){
-        let expectation = expectationWithDescription("wait to get countries");
+        let expectation = self.expectation(description: "wait to get countries");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -585,11 +585,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testGetCurrencies(){
-        let expectation = expectationWithDescription("wait to get currencies");
+        let expectation = self.expectation(description: "wait to get currencies");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -607,11 +607,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testGetUserInfo(){
-        let expectation = expectationWithDescription("wait to get user info");
+        let expectation = self.expectation(description: "wait to get user info");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -626,11 +626,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testCurrencyConversion(){
-        let expectation = expectationWithDescription("wait to get user info");
+        let expectation = self.expectation(description: "wait to get user info");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -645,11 +645,11 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     func testAddressValidation(){
-        let expectation = expectationWithDescription("wait to get user info");
+        let expectation = self.expectation(description: "wait to get user info");
         
         let core = GTNCore()
         let config = GTNConfig();
@@ -672,7 +672,7 @@ class GTNTestAPIAccess: XCTestCase {
             expectation.fulfill();
         };
         
-        waitForExpectationsWithTimeout(15.0, handler: nil);
+        waitForExpectations(timeout: 15.0, handler: nil);
     }
     
     // MARK:

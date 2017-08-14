@@ -8,23 +8,23 @@
 
 import Foundation
 
-public class GTNVariantOption: NSObject{
+open class GTNVariantOption: NSObject{
     
-    public var optionId: String = "";
-    public var valueId: String = "";
-    public var name: String = "";
-    public var value: String = "";
+    open var optionId: String = "";
+    open var valueId: String = "";
+    open var name: String = "";
+    open var value: String = "";
     
-    public var imageUrl: String = "";
-    public var imageType: String = "";
-    public var sortValue: Int = 0;
+    open var imageUrl: String = "";
+    open var imageType: String = "";
+    open var sortValue: Int = 0;
     
     init(_ jsonObj: AnyObject) {
         super.init();
         self.parseJson(jsonObj);
     }
     
-    func parseJson(jsonObj: AnyObject) {
+    func parseJson(_ jsonObj: AnyObject) {
         
         if let optionIdS = jsonObj["OptionId"] as? String { self.optionId = optionIdS; }
         if let valueIdS = jsonObj["ValueId"] as? String { self.valueId = valueIdS; }
@@ -34,7 +34,7 @@ public class GTNVariantOption: NSObject{
         if let imageTypeS = jsonObj["ImageType"] as? String { self.imageType = imageTypeS; }
         
         if let sortValueObj = jsonObj["SortValue"] {
-            if sortValueObj is String, let sortValueS = sortValueObj as? String, sortValueI = Int(sortValueS) {
+            if sortValueObj is String, let sortValueS = sortValueObj as? String, let sortValueI = Int(sortValueS) {
                 self.sortValue = sortValueI;
             } else if sortValueObj is Int, let sortValueI = sortValueObj as? Int {
                 self.sortValue = sortValueI;

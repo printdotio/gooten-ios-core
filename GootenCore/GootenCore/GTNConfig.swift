@@ -9,25 +9,25 @@
 import UIKit
 
 @objc public enum GTNEnvironment: Int { // @objc -> used to support Obj C enums
-    case Production
-    case Staging
-    case QA
+    case production
+    case staging
+    case qa
 }
 
-public class GTNConfig: NSObject {
+open class GTNConfig: NSObject {
     
     static let sharedInstance = GTNConfig();
     static let buildVersion = 34;
     
     // public configuration with default values
-    public var isInTestMode: Bool = false;
-    public var recipeId = "";
-    public var turnOffLogs: Bool = false;
-    public var environment: GTNEnvironment = .Production;
-    public var countryCode: String = GTNDefaults.kCountryCode;
-    public var languageCode: String = GTNDefaults.kLanguageCode;
-    public var currencyCode: String = GTNDefaults.kCurrencyCode;
-    public var showAllProducts: Bool = true;
+    open var isInTestMode: Bool = false;
+    open var recipeId = "";
+    open var turnOffLogs: Bool = false;
+    open var environment: GTNEnvironment = .production;
+    open var countryCode: String = GTNDefaults.kCountryCode;
+    open var languageCode: String = GTNDefaults.kLanguageCode;
+    open var currencyCode: String = GTNDefaults.kCurrencyCode;
+    open var showAllProducts: Bool = true;
     
     public override init(){
         super.init();
@@ -48,7 +48,7 @@ public class GTNConfig: NSObject {
         GTNConfig.sharedInstance.showAllProducts = config.showAllProducts;
     }
     
-    override public func isEqual(object: AnyObject?) -> Bool {
+    override open func isEqual(_ object: Any?) -> Bool {
         if !(object is GTNConfig) {return false;}
         
         guard let obj = object as? GTNConfig
